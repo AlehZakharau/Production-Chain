@@ -17,7 +17,23 @@
             
             model.OnProducingItem += ModelOnOnProducingItem;
             
+            //model.OnInitial += ModelOnOnInitial;
+            
+            view.OnProducing += ViewOnOnProducing;
+            
             SyncProducing();
+            
+            SyncInitial();
+        }
+
+        private void ViewOnOnProducing()
+        {
+            model.ResourceItem++;
+        }
+
+        private void ModelOnOnInitial()
+        {
+            SyncInitial();
         }
 
         private void ModelOnOnProducingItem()
@@ -28,6 +44,13 @@
         private void SyncProducing()
         {
             view.ResourceItem = model.ResourceItem;
+        }
+
+        private void SyncInitial()
+        {
+            view.ProducingSpeed = model.ProducingSpeed;
+            view.ExtractiveType = model.ExtractiveType;
+            view.Position = model.Position;
         }
     }
 }

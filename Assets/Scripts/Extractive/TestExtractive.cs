@@ -7,18 +7,26 @@ namespace Extractive
     public class TestExtractive : MonoBehaviour
     {
         [SerializeField] private ExtractiveViewFactory viewFactory;
+
+        [SerializeField] private ExtractiveModelViewData[] modelViews; 
         private void Awake()
         {
-            var modelFactory = new ExtractiveModelFactory();
-            var model = modelFactory.Model;
 
-            viewFactory.Initiate();
-            var view = viewFactory.View;
+            foreach (var modelView in modelViews)
+            {
+                var modelFactory = new ExtractiveModelFactory();
+                var model = modelFactory.Model;
+                model.Initialize(modelView.ProductionSpeed, modelView.ExtractiveType, modelView.Position);
 
-            var controllerFactory = new ExtractiveControllerFactory(model, view);
-            var controller = controllerFactory.Controller;
-
-            StartCoroutine(Producing(model));
+                viewFactory.Initiate();
+                var view = viewFactory.View;
+                
+ 
+                var controllerFactory = new ExtractiveControllerFactory(model, view);
+                var controller = controllerFactory.Controller;
+            }
+            
+            //StartCoroutine(Producing(model));
         }
 
         private IEnumerator Producing(IExtractiveModel model)
