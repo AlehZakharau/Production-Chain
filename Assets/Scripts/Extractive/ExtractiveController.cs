@@ -49,6 +49,7 @@
         private void SyncInitial()
         {
             view.ProducingSpeed = model.ProducingSpeed;
+            view.ResourceType = model.ResourceType;
             view.ExtractiveType = model.ExtractiveType;
             view.Position = model.Position;
             view.ExtractiveColor = model.ExtractiveColor;
