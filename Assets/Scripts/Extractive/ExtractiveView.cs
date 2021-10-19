@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Timers;
+using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Extractive
         float ProducingSpeed { get; set; }
         ExtractiveType ExtractiveType { set; }
         Vector3 Position { set; }
+        Color ExtractiveColor { set; }
     }
     
     public class ExtractiveView : MonoBehaviour, IExtractiveView
@@ -22,13 +24,11 @@ namespace Extractive
         public event Action OnProducing;
         public int ResourceItem { set => text.text = value.ToString(); }
         public float ProducingSpeed { get; set; }
+        public ExtractiveType ExtractiveType { get; set; }
         public Vector3 Position { set => transform.position = value; }
-        public ExtractiveType ExtractiveType
-        {
-            set => material.color = GetColor(value); 
-        }
+        public Color ExtractiveColor { set => material.color = value; }
 
-
+        
         private float timer;
         private void Update()
         {
@@ -37,21 +37,6 @@ namespace Extractive
             {
                 timer = 0;
                 OnProducing?.Invoke();
-            }
-        }
-
-        private Color GetColor(ExtractiveType extractiveType)
-        {
-            switch (extractiveType)
-            {
-                case ExtractiveType.Blue:
-                    return Color.blue;
-                case ExtractiveType.Green:
-                    return Color.green;
-                case ExtractiveType.Red:
-                    return Color.red;
-                default:
-                    return Color.white;
             }
         }
     }

@@ -8,15 +8,15 @@ namespace Extractive
     {
         [SerializeField] private ExtractiveViewFactory viewFactory;
 
-        [SerializeField] private ExtractiveModelViewData[] modelViews; 
+        [SerializeField] private ExtractiveInitializeData[] initData; 
         private void Awake()
         {
 
-            foreach (var modelView in modelViews)
+            foreach (var initializeData in initData)
             {
                 var modelFactory = new ExtractiveModelFactory();
                 var model = modelFactory.Model;
-                model.Initialize(modelView.ProductionSpeed, modelView.ExtractiveType, modelView.Position);
+                model.Initialize(initializeData.InitializeData);
 
                 viewFactory.Initiate();
                 var view = viewFactory.View;

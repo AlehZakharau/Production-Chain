@@ -1,4 +1,5 @@
 ﻿using System;
+using DefaultNamespace;
 using UnityEngine;
 
 namespace Extractive
@@ -15,8 +16,10 @@ namespace Extractive
         Vector3 Position { get; set; }
         
         ExtractiveType ExtractiveType { get; set; }
+        
+        public Color ExtractiveColor { get; set; }
 
-        public void Initialize(float producingSpeed, ExtractiveType extractiveType, Vector3 position);
+        public void Initialize(ExtractiveInitializeModel.InitializeData initializeData);
     }
     
     public class ExtractiveModel: IExtractiveModel
@@ -40,16 +43,17 @@ namespace Extractive
     public float ProducingSpeed { get; set; }
     public Vector3 Position { get; set; }
     public ExtractiveType ExtractiveType { get; set; }
-
-    public void Initialize(float producingSpeed, ExtractiveType extractiveType, Vector3 position)
+    public Color ExtractiveColor { get; set; }
+    public void Initialize(ExtractiveInitializeModel.InitializeData initializeData)
     {
-        ProducingSpeed = producingSpeed;
-        ExtractiveType = extractiveType;
-        Position = position;
-        OnInitial?.Invoke();
+        ProducingSpeed = initializeData.ProductionSpeed;
+        ExtractiveType = initializeData.ExtractiveType;
+        Position = initializeData.SpawnPosition.position;
+        ExtractiveColor = GetColor(initializeData.ExtractiveType);
+        //OnInitial?.Invoke();
     }
-    
-    
+
+
     private Color GetColor(ExtractiveType extractiveType)
     {
         switch (extractiveType)
@@ -58,8 +62,8 @@ namespace Extractive
                 return Color.blue;
             case ExtractiveType.Green:
                 return Color.green;
-            case ExtractiveType.Red:
-                return Color.red;
+            case ExtractiveType.Yellow:
+                return Color.yellow;
             default:
                 return Color.white;
         }

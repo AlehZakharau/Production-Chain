@@ -51,6 +51,7 @@
             view.ProducingSpeed = model.ProducingSpeed;
             view.ExtractiveType = model.ExtractiveType;
             view.Position = model.Position;
+            view.ExtractiveColor = model.ExtractiveColor;
         }
     }
 }
