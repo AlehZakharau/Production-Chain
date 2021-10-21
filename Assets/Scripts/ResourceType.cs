@@ -15,6 +15,14 @@
         Yellow
     }
 
+    public enum ProductionPointType
+    {
+        Cube,
+        Sphere,
+        Cone,
+        Cylinder
+    }
+
     public enum RefineryType
     {
         RedSphere,
