@@ -7,6 +7,7 @@ namespace DefaultNamespace.ProductionPoint
 {
     public interface IProductionPointView
     {
+        public event Action onClick;
         public ProductionPointType ProductionPointType { get; set; }
         public ResourceType ProducingResourceType { get; set; }
         public int ProducingResource { get; set; }
@@ -20,7 +21,8 @@ namespace DefaultNamespace.ProductionPoint
         [SerializeField] private TMP_Text productionPointTypeText;
         [SerializeField] private TMP_Text demandResources;
         
-        
+        public event Action onClick;
+
         public ProductionPointType ProductionPointType { get => ProductionPointType; 
             set => productionPointTypeText.text = value.ToString(); }
         public ResourceType ProducingResourceType { get => ProducingResourceType;
@@ -31,5 +33,10 @@ namespace DefaultNamespace.ProductionPoint
             set => demandResources.text = value.ToString(); }
         public Vector3 Position { get => Position;
             set => transform.position = value; }
+
+        private void OnMouseDown()
+        {
+            onClick?.Invoke();
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace DefaultNamespace.ProductionPoint
     public interface IProductionPointModel
     {
         public event Action OnProducingResource;
+        public event Action<IProductionPointModel> OnClick;
         
         public ProductionPointType ProductionPointType { get; set; }
         
@@ -34,7 +35,7 @@ namespace DefaultNamespace.ProductionPoint
 
         public void AddDemandResources(ResourceType resourceType);
 
-        public void CallTransportService();
+        public void CallTransportService(IProductionPointModel model);
 
         public void Tick();
 
@@ -45,6 +46,7 @@ namespace DefaultNamespace.ProductionPoint
         private float timer;
         
         public event Action OnProducingResource;
+        public event Action<IProductionPointModel> OnClick;
         public ProductionPointType ProductionPointType { get; set; }
         public ResourceType ProducingResourceType { get; set; }
 
@@ -77,6 +79,7 @@ namespace DefaultNamespace.ProductionPoint
             ProductionSpeed = initializeData.productionSpeed;
             Position = initializeData.spawnPosition.position;
             DemandResourceTypes = initializeData.demandResources;
+            Extractor = true;
             foreach (var resource in initializeData.demandResources)
             {
                 if (!DemandResources.ContainsKey(resource))
@@ -103,12 +106,12 @@ namespace DefaultNamespace.ProductionPoint
             {
                 DemandResources[varResource]--;
             }
-            resource++;
+            ProducingResource++;
         }
 
-        public void CallTransportService()
+        public void CallTransportService(IProductionPointModel model)
         {
-            throw new NotImplementedException();
+            OnClick?.Invoke(model);
         }
 
         public void Tick()
@@ -124,7 +127,7 @@ namespace DefaultNamespace.ProductionPoint
                 timer = 0;
                 if (Extractor)
                 {
-                    resource++;
+                    ProducingResource++;
                 }
                 else
                 {

@@ -1,4 +1,6 @@
-﻿namespace DefaultNamespace.ProductionPoint
+﻿using UnityEngine;
+
+namespace DefaultNamespace.ProductionPoint
 {
     public interface IProductionPointController
     {
@@ -16,10 +18,20 @@
             this.view = view;
             
             model.OnProducingResource += ModelOnOnProducingResource;
+
+            view.onClick += SyncClick;
             
             SyncProducing();
             
             Initial();
+        }
+
+        private void Initial()
+        {
+            view.Position = model.Position;
+            view.ProducingResourceType = model.ProducingResourceType;
+            view.DemandResourceTypes = model.DemandResourceTypes;
+            view.ProductionPointType = model.ProductionPointType;
         }
 
         private void ModelOnOnProducingResource()
@@ -32,12 +44,9 @@
             view.ProducingResource = model.ProducingResource;
         }
 
-        private void Initial()
+        private void SyncClick()
         {
-            view.Position = model.Position;
-            view.ProducingResourceType = model.ProducingResourceType;
-            view.DemandResourceTypes = model.DemandResourceTypes;
-            view.ProductionPointType = model.ProductionPointType;
+            model.CallTransportService(model);
         }
     }
 }

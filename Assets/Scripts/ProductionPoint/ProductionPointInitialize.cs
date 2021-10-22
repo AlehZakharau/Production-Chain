@@ -10,15 +10,18 @@ namespace DefaultNamespace.ProductionPoint
 
         [SerializeField] private ProductionPointInitializeData[] initData;
 
-        private List<IProductionPointModelFactory> productionModelFactories =
-                new List<IProductionPointModelFactory>(20);
-        
+        private readonly List<IProductionPointModelFactory> productionModelFactories =
+                new List<IProductionPointModelFactory>();
+
+        public List<IProductionPointModelFactory> ProductionModelFactories => productionModelFactories;
+
         private void Awake()
         {
 
             foreach (var initializeData in initData)
             {
                 var modelFactory = new ProductionPointModelFactory();
+                productionModelFactories.Add(modelFactory);
                 var model = modelFactory.Model;
                 model.Initialize(initializeData.InitializeData);
 
