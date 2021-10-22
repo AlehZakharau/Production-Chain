@@ -47,14 +47,14 @@ namespace Extractive
 
         
         private float timer;
-        private void Update()
-        {
-            timer += Time.deltaTime;
-            if (timer > ProducingSpeed)
-            {
-                timer = 0;
-                OnProducing?.Invoke();
-            }
-        }
+        // private void Update()
+        // {
+        //     timer += Time.deltaTime;
+        //     if (timer > ProducingSpeed)
+        //     {
+        //         timer = 0;
+        //         OnProducing?.Invoke();
+        //     }
+        // }
     }
 }

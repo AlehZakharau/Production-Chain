@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using DefaultNamespace;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace Extractive
         ExtractiveType ExtractiveType { get; set; }
         
         public Color ExtractiveColor { get; set; }
+        public void Producing();
 
         public void Initialize(ExtractiveInitializeModel.InitializeData initializeData);
     }
@@ -36,6 +38,17 @@ namespace Extractive
                 if (resourceItem == value) return;
                 resourceItem = value;
                 OnProducingItem?.Invoke();
+            }
+        }
+
+        private float timer;
+        public void Producing()
+        {
+            timer += Time.deltaTime;
+            if (timer > ProducingSpeed)
+            {
+                timer = 0;
+                ResourceItem++;
             }
         }
 
