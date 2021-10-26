@@ -13,6 +13,7 @@ namespace DefaultNamespace.ProductionPoint
         public int ProducingResource { get; set; }
         public ResourceType[] DemandResourceTypes { get; set; }
         public Vector3 Position { get; set; }
+        
     }
     public class ProductionPointView : MonoBehaviour, IProductionPointView
     {
@@ -20,7 +21,19 @@ namespace DefaultNamespace.ProductionPoint
         [SerializeField] private TMP_Text amountText;
         [SerializeField] private TMP_Text productionPointTypeText;
         [SerializeField] private TMP_Text demandResources;
-        
+
+
+        private bool isSelected;
+        private Material baseMaterial;
+
+        private Color baseColor;
+
+
+        private void Awake()
+        {
+            baseMaterial = GetComponentInChildren<MeshRenderer>().material;
+            baseColor = baseMaterial.color;
+        }
         public event Action onClick;
 
         public ProductionPointType ProductionPointType { get => ProductionPointType; 
@@ -37,6 +50,22 @@ namespace DefaultNamespace.ProductionPoint
         private void OnMouseDown()
         {
             onClick?.Invoke();
+            StartCoroutine(ShowSelectEffect());
+        }
+
+        private IEnumerator ShowSelectEffect()
+        {
+            float timer = 0;
+            baseMaterial.color = Color.yellow;
+            while (timer < 1f)
+            {
+                timer += Time.deltaTime;
+                baseMaterial.color = new Color(
+                    Mathf.Lerp(baseMaterial.color.r, baseColor.r, timer),
+                    Mathf.Lerp(baseMaterial.color.g, baseColor.g, timer),
+                    Mathf.Lerp(baseMaterial.color.b, baseColor.b, timer));                
+                yield return null;
+            }
         }
     }
 }

@@ -22,6 +22,17 @@ namespace DefaultNamespace.Transport
         public Vector3 SenderPosition { get; set; }
         public Vector3 ReceiverPosition { get; set; }
 
+        private Material baseMaterial;
+
+        private Color baseColor;
+
+
+        private void Awake()
+        {
+            baseMaterial = GetComponentInChildren<MeshRenderer>().material;
+            baseColor = baseMaterial.color;
+        }
+
 
         public void CreateBridge()
         {
@@ -37,7 +48,17 @@ namespace DefaultNamespace.Transport
 
         private void OnMouseDown()
         {
-            isSelected = !isSelected;
+            if (isSelected)
+            {
+                isSelected = false;
+                baseMaterial.color = baseColor;
+            }
+            else
+            {
+                isSelected = true;
+                baseMaterial.color = Color.yellow;
+            }
+            
         }
 
         private void Update()
@@ -50,6 +71,11 @@ namespace DefaultNamespace.Transport
                 //Delete Model, Controller and fabrics
                 // or GC destroy it by itself
             }
+        }
+
+        private void ShowSelected()
+        {
+            baseMaterial.color = Color.yellow;
         }
     }
 }
