@@ -35,10 +35,7 @@ namespace DefaultNamespace.ProductionPoint
 
         public ProductionPointModelFactory(ProductionPointSpec spec)
         {
-            if (spec.Extractor)
-                Model = new ExtractorModel(spec);
-            else
-                Model = new RefineryModel(spec);
+            Model = new ProductionPointModel(spec);
         }
     }
 
