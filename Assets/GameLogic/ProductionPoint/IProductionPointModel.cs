@@ -7,9 +7,6 @@ public interface IProductionPointModel
     public ProductionPointType Type { get; }
     public int ResourceAmount { get; set; }
     public ProductionPointSpec ProductionPointSpec { get; }
-    public bool AddDemandResources(ResourceType resource);
-    public ResourceType GetResource();
-
     public void Tick();
 }
 
@@ -35,25 +32,7 @@ internal class ProductionPointModel : IProductionPointModel
     private float timer;
 
     private readonly IProducingSystem producingSystem;
-
-
-    private void Producing()
-    {
-        if (ProductionPointSpec.CheckProductionOpportunity())
-        {
-            ResourceAmount++;
-        }
-    }
-
-    public bool AddDemandResources(ResourceType resource)
-    {
-        return ProductionPointSpec.AddDemandResources(resource);
-    }
-
-    public ResourceType GetResource()
-    {
-        return ProductionPointSpec.Resource;
-    }
+    
 
     public void Tick()
     {
