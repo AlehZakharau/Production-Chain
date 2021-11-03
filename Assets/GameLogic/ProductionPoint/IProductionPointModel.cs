@@ -13,55 +13,29 @@ public interface IProductionPointModel
     public void Tick();
 }
 
-internal class ExtractorModel : IProductionPointModel
+internal class ProductionPointModel : IProductionPointModel
 {
-    public ExtractorModel(ProductionPointSpec productionPointSpec)
+    public ProductionPointModel(ProductionPointSpec productionPointSpec)
     {
         ProductionPointSpec = productionPointSpec;
-    }
-    
-    public ProductionPointType Type => ProductionPointSpec.Type;
-    public int ResourceAmount { get; set; } = 0;
-    public ProductionPointSpec ProductionPointSpec { get; }
-    
-    private float timer;
-    private void Producing()
-    {
-        ResourceAmount++;
-    }
 
-    public bool AddDemandResources(ResourceType resource)
-    {
-        return ProductionPointSpec.AddDemandResources(resource);
-    }
-
-    public ResourceType GetResource()
-    {
-        return ProductionPointSpec.Resource;
-    }
-
-    public void Tick()
-    {
-        timer += Time.deltaTime;
-        if (timer > ProductionPointSpec.ProductionSpeed)
+        if (productionPointSpec.Extractor)
         {
-            timer = 0;
-            Producing();
+            producingSystem = new ExtractorProducing(this, productionPointSpec);
+        }
+        else
+        {
+            producingSystem = new RefineryProducing(this, productionPointSpec);
         }
     }
-}
-
-internal class RefineryModel : IProductionPointModel
-{
-    public RefineryModel(ProductionPointSpec productionPointSpec)
-    {
-        ProductionPointSpec = productionPointSpec;
-    }
-    private float timer;
+    public ProductionPointSpec ProductionPointSpec { get; }
     public ProductionPointType Type => ProductionPointSpec.Type;
     public int ResourceAmount { get; set; } = 0;
 
-    public ProductionPointSpec ProductionPointSpec { get; }
+    private float timer;
+
+    private readonly IProducingSystem producingSystem;
+
 
     private void Producing()
     {
@@ -87,7 +61,52 @@ internal class RefineryModel : IProductionPointModel
         if (timer > ProductionPointSpec.ProductionSpeed)
         {
             timer = 0;
-            Producing();
+            producingSystem.Producing();
+        }
+    }
+
+    private interface IProducingSystem
+    {
+        public void Producing();
+    }
+    
+    public class ExtractorProducing : IProducingSystem
+    {
+
+        private readonly IProductionPointModel ProductionPointModel;
+        private readonly ProductionPointSpec ProductionPointSpec;
+
+        public ExtractorProducing(IProductionPointModel productionPointModel,
+            ProductionPointSpec productionPointSpec)
+        {
+            this.ProductionPointModel = productionPointModel;
+            this.ProductionPointSpec = productionPointSpec;
+        }
+
+        public void Producing()
+        {
+            ProductionPointModel.ResourceAmount++;
+        }
+    }
+    
+    public class RefineryProducing : IProducingSystem
+    {
+        private readonly IProductionPointModel ProductionPointModel;
+        private readonly ProductionPointSpec ProductionPointSpec;
+
+        public RefineryProducing(IProductionPointModel productionPointModel,
+            ProductionPointSpec productionPointSpec)
+        {
+            this.ProductionPointModel = productionPointModel;
+            this.ProductionPointSpec = productionPointSpec;
+        }
+
+        public void Producing()
+        {
+            if (ProductionPointSpec.CheckProductionOpportunity())
+            {
+                ProductionPointModel.ResourceAmount++;
+            }
         }
     }
 }
