@@ -4,15 +4,14 @@ using UnityEngine;
 
 namespace GameLogic.ProductionPoint
 {
-    public class ProductionPointSpecInitializeData : MonoBehaviour
+    public class ManufactureInitData : MonoBehaviour
     {
         [SerializeField] private InitializeData.InitData initData;
 
         [SerializeField] private InitializeData.LevelData[] levelsData =
             new[] { new InitializeData.LevelData(), new InitializeData.LevelData()};
 
-        public InitializeData.InitData InitData => initData;
-        public InitializeData.LevelData[] LevelsData => levelsData;
+        public ManufactureData ManufactureData => new ManufactureData(initData, levelsData);
 
 #if UNITY_EDITOR
         private void Awake()
@@ -21,13 +20,13 @@ namespace GameLogic.ProductionPoint
         }
         private void CheckInitData()
         {
-            if (InitData.extractor && InitData.demandProducingResources.Length < 1)
+            if (initData.extractor && initData.demandProducingResources.Length < 1)
             {
                 Debug.LogWarning($"<color=blue>Init Data</color>" +
                                  $"Demand Producing resources for {this} is empty");
             }
 
-            foreach (var levelData in LevelsData)
+            foreach (var levelData in levelsData)
             {
                 if (levelData.demandUpgradeResource.Length < 1)
                 {
@@ -63,7 +62,7 @@ namespace GameLogic.ProductionPoint
 
             public ResourceType[] demandProducingResources;
 
-            public ProductionPointType productionPointType;
+            public ManufactureType manufactureType;
 
             public Transform Position;
 

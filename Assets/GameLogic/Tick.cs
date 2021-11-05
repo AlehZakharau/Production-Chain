@@ -6,7 +6,7 @@ namespace GameLogic
 {
     public class Tick : MonoBehaviour
     {
-        public List<IProductionPointModel> ProductionPointModels { get; }
+        public readonly List<ITickable> ProductionPointModels = new List<ITickable>();
 
         private void Update()
         {
@@ -17,8 +17,8 @@ namespace GameLogic
         }
     }
 
-    // public interface ITickable
-    // {
-    //     public void Tick();
-    // }
+    public interface ITickable
+    {
+        public void Tick();
+    }
 }

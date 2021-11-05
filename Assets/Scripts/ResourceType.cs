@@ -1,12 +1,6 @@
 ﻿namespace DefaultNamespace
 {
-    public enum ResourceType
-    {
-        BlueResource,
-        OrangeResource,
-        GreenResource,
-        VioletResource
-    }
+    
 
     public enum ExtractiveType
     {
@@ -28,5 +22,12 @@
         RedSphere,
         BlueCube,
         YellowCone
+    }
+
+    public enum Levels
+    {
+        Level0,
+        Level1,
+        Level2
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace GameLogic
 {
-    public enum ProductionPointType
+    public enum ManufactureType
     {
         Extractor,
         Refinery
