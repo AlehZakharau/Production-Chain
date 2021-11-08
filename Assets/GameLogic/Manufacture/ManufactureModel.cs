@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using DefaultNamespace.Transport;
-using GameLogic;
+using GameLogic.Transport;
 using UnityEngine;
 
-namespace GameLogic.ProductionPoint
+namespace GameLogic.Manufacture
 {
     public interface IManufactureModel
-    {
-        public event Action OnProducingResource;
+    { public event Action OnProducingResource;
         public int ResourceAmount { get; set; }
         public ManufactureData ManufactureData { get; }
+        public void AddSenderModel();
+        public void AddReceiverModel();
     }
 
     internal class ManufactureModel : IManufactureModel, ITickable
@@ -23,7 +22,7 @@ namespace GameLogic.ProductionPoint
 
         private int resourceAmount;
 
-        private TransportationService transportationService;
+        private readonly TransportationService transportationService;
         public ManufactureModel(ManufactureData manufactureData, TransportationService transportationService)
         {
             ManufactureData = manufactureData;
@@ -52,6 +51,16 @@ namespace GameLogic.ProductionPoint
                 timer = 0;
                 producingSystem.Producing();
             }
+        }
+
+        public void AddSenderModel()
+        {
+            transportationService.AddSenderModel(this);
+        }
+
+        public void AddReceiverModel()
+        {
+            transportationService.AddReceiverModel(this);
         }
 
         private interface IProducingSystem

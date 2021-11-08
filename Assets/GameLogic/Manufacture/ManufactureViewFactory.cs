@@ -1,7 +1,7 @@
-﻿using DefaultNamespace.Transport;
+﻿using GameLogic.Transport;
 using UnityEngine;
 
-namespace GameLogic.ProductionPoint
+namespace GameLogic.Manufacture
 {
     public interface IManufactureViewFactory
     {

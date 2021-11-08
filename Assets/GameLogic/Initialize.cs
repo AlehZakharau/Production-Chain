@@ -1,24 +1,26 @@
 ﻿using System;
-using DefaultNamespace.Transport;
+using GameLogic.Manufacture;
+using GameLogic.Transport;
 using UnityEngine;
 
-namespace GameLogic.ProductionPoint
+namespace GameLogic
 {
-    public class ManufactureInitialize : MonoBehaviour
+    public class Initialize : MonoBehaviour
     {
         [SerializeField] private ManufactureViewFactory viewFactory;
+        [SerializeField]private TransportViewFactory transportViewFactory;
         
         [SerializeField] private ManufactureInitData[] specData;
         [SerializeField] private Tick tick;
 
         private void Awake()
         {
-            var transportationService = new TransportationService();
+            var transportationService = new TransportationService(transportViewFactory, tick);
             foreach (var t in specData)
             {
                 if (t == null) throw new NullReferenceException();
                 var modelFactory = new ManufactureModelFactory(t.ManufactureData, transportationService);
-                tick.ProductionPointModels.Add(modelFactory.Tickable);
+                tick.Tickable.Add(modelFactory.Tickable);
                 var model = modelFactory.Model;
                 
                 

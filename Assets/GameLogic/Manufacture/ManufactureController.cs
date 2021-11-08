@@ -1,4 +1,4 @@
-﻿namespace GameLogic.ProductionPoint
+﻿namespace GameLogic.Manufacture
 {
     public interface IManufactureController
     {
@@ -17,7 +17,21 @@
             
             model.OnProducingResource += ModelOnProducingResource;
             
+            view.OnClick += ViewOnClick;
+            
+            view.onCollision += ViewOnCollision;
+
             Init();
+        }
+
+        private void ViewOnCollision()
+        {
+            model.AddReceiverModel();
+        }
+
+        private void ViewOnClick()
+        {
+            model.AddSenderModel();
         }
 
         private void ModelOnProducingResource()

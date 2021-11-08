@@ -1,8 +1,7 @@
-﻿using DefaultNamespace.ProductionPoint;
-using GameLogic.ProductionPoint;
+﻿using GameLogic.Manufacture;
 using UnityEngine;
 
-namespace DefaultNamespace.Transport
+namespace GameLogic.Transport
 {
     public interface ITransportViewFactory
     {
@@ -28,16 +27,19 @@ namespace DefaultNamespace.Transport
     public interface ITransportModelFactory
     {
         ITransportModel Model { get; }
+        ITickable Tick { get; }
     }
 
     public class TransportModelFactory : ITransportModelFactory
     {
         public ITransportModel Model { get; }
+        public ITickable Tick { get; }
 
-        public TransportModelFactory(IManufactureModel sender,
-            IManufactureModel receiver)
+        public TransportModelFactory(TransportationService transportationService)
         {
-            Model = new TransportModel(sender, receiver);
+            var model = new TransportModel(transportationService);
+            Model = model;
+            Tick = model;
         }
     }
 

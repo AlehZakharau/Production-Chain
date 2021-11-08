@@ -1,32 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace DefaultNamespace.Transport
+namespace GameLogic.Transport
 {
     public interface ITransportView
     {
+        public event Action onClick;
         public event Action OnDestroy;
         public Vector3 SenderPosition { get; set; }
         
         public Vector3 ReceiverPosition { get; set; }
-
-        public void CreateBridge();
     }
-    public class TransportView : MonoBehaviour, ITransportView
+    public class TransportView : MonoBehaviour, ITransportView, IClickable
     {
-        //[SerializeField] private GameObject bridge;
-
-        private bool isSelected;
+        [SerializeField] private TransportPoint senderPoint;
+        [SerializeField] private TransportPoint receiverPoint;
+        [SerializeField] private GameObject connection;
+        public event Action onClick;
         public event Action OnDestroy;
-        public Vector3 SenderPosition { get; set; }
-        public Vector3 ReceiverPosition { get; set; }
 
+        // private Vector3 senderPosition;
+        // private Vector3 receiverPosition;
+        public Vector3 SenderPosition { get => senderPoint.transform.position;
+            set
+            {
+                if(senderPoint.transform.position == value) return;
+                senderPoint.transform.position = value;
+            }
+        }
+        public Vector3 ReceiverPosition { get => receiverPoint.transform.position;
+            set
+            {
+                if(receiverPoint.transform.position == value) return;
+                receiverPoint.transform.position = value;
+            }
+        }
         private Material baseMaterial;
 
         private Color baseColor;
-
-
         private void Awake()
         {
             baseMaterial = GetComponentInChildren<MeshRenderer>().material;
@@ -34,48 +45,51 @@ namespace DefaultNamespace.Transport
         }
 
 
-        public void CreateBridge()
+        private void SetConnection()
         {
-            //var instance = Instantiate(bridge);
-            transform.position = SenderPosition + 0.5f * (ReceiverPosition - SenderPosition);
             var target = ReceiverPosition - SenderPosition;
-            target.Normalize();
-            var targetAngle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg - 90;
-            transform.Rotate(Vector3.forward, targetAngle);
+            connection.transform.position = SenderPosition + 0.5f * (target);
+            //target.Normalize();
+            //var targetAngle = Mathf.Atan2(ReceiverPosition.y, ReceiverPosition.x) * Mathf.Rad2Deg;
+            //connection.transform.Rotate(Vector3.forward, targetAngle);
+            connection.transform.LookAt(ReceiverPosition);
             var distance = Vector3.Distance(SenderPosition, ReceiverPosition);
-            transform.localScale = new Vector3(1, distance, 1);
-        }
-
-        private void OnMouseDown()
-        {
-            if (isSelected)
-            {
-                isSelected = false;
-                baseMaterial.color = baseColor;
-            }
-            else
-            {
-                isSelected = true;
-                baseMaterial.color = Color.yellow;
-            }
-            
+            connection.transform.localScale = new Vector3(0.3f, 0.3f, distance);
         }
 
         private void Update()
         {
-            if (!isSelected) return;
-            if (Input.GetMouseButtonDown(1))
+            if (receiverPoint.IsMovable || senderPoint.IsMovable)
             {
-                OnDestroy?.Invoke();
-                Destroy(gameObject);
-                //Delete Model, Controller and fabrics
-                // or GC destroy it by itself
+                SetConnection();
             }
+            // if (Input.GetMouseButtonDown(1))
+            // {
+            //     OnDestroy?.Invoke();
+            //     Destroy(gameObject);
+            //     //Delete Model, Controller and fabrics
+            //     // or GC destroy it by itself
+            // }
         }
 
         private void ShowSelected()
         {
             baseMaterial.color = Color.yellow;
+        }
+
+        public void Click()
+        {
+            onClick?.Invoke();
+        }
+
+        public void Select()
+        {
+            baseMaterial.color = Color.yellow;
+        }
+
+        public void UnSelect()
+        {
+            baseMaterial.color = baseColor;
         }
     }
 }

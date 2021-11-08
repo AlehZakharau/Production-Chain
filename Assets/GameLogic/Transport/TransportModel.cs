@@ -1,56 +1,78 @@
 ﻿using System;
-using GameLogic.ProductionPoint;
+using GameLogic.Manufacture;
 using UnityEngine;
 
-namespace DefaultNamespace.Transport
+namespace GameLogic.Transport
 {
     public interface ITransportModel
     {
-        public event Action<IManufactureModel, ITransportModel> OnDestroy;
-        public event Action OnCreateBridge;
+        public event Action OnCreateConnection;
         public Vector3 SenderPosition { get; set; }
         
         public Vector3 ReceiverPosition { get; set; }
-        
-        public void Transportation();
 
-        public void CreateBridge();
+        public void AddSenderModel(IManufactureModel senderModel);
 
-        public void OnDestroyBridge();
+        public void AddReceiverModel(IManufactureModel receiverModel);
+
+        public void OnDestroy();
     }
-    public class TransportModel : ITransportModel
+    public class TransportModel : ITransportModel, ITickable
     {
-        private readonly IManufactureModel senderModel;
-        private readonly IManufactureModel receiverModel;
-        private readonly float distance;
+        public event Action OnCreateConnection;
+        
+        private readonly TransportationService transportationService;
+        private IManufactureModel senderModel;
+        private IManufactureModel receiverModel;
+        private Vector3 senderPosition;
+        private float distance;
         private float timer;
         private float transportationSpeed = 5;
-        public TransportModel(IManufactureModel sender, IManufactureModel receiver)
-        {
-            senderModel = sender;
-            receiverModel = receiver;
+        private bool isConnected;
 
-            SenderPosition = sender.ManufactureData.Position;
-            ReceiverPosition = receiver.ManufactureData.Position;
+        public TransportModel(TransportationService transportationService)
+        {
+            this.transportationService = transportationService;
+        }
+
+        public Vector3 SenderPosition { get => senderPosition;
+            set
+            {
+                if(senderPosition == value) return;
+                senderPosition = value;
+                OnCreateConnection?.Invoke();
+            } }
+
+        public Vector3 ReceiverPosition { get; set; }
+
+        public void AddSenderModel(IManufactureModel senderModel)
+        {
+            this.senderModel = senderModel;
+
+            SenderPosition = senderModel.ManufactureData.Position;
+
+        }
+
+        public void AddReceiverModel(IManufactureModel receiverModel)
+        {
+            this.receiverModel = receiverModel;
+
+            ReceiverPosition = receiverModel.ManufactureData.Position;
             
             distance = Vector3.Distance(SenderPosition, ReceiverPosition);
 
-            Debug.Log($"Sender: {sender.ManufactureData.ProducingResource} " +
-                      $"Receiver: {receiver.ManufactureData.ProducingResource}");
+            isConnected = true;
         }
-
-        public event Action<IManufactureModel, ITransportModel> OnDestroy;
-        public event Action OnCreateBridge;
-        public Vector3 SenderPosition { get; set; }
-
-        public Vector3 ReceiverPosition { get; set; }
 
         public void Tick()
         {
-            Transportation();
+            if (isConnected)
+            {
+                Transportation();
+            }
         }
 
-        public void Transportation()
+        private void Transportation()
         {
             if(senderModel.ResourceAmount < 1) return;
             timer += Time.deltaTime;
@@ -62,14 +84,11 @@ namespace DefaultNamespace.Transport
             }
         }
 
-        public void CreateBridge()
+        public void OnDestroy()
         {
-            OnCreateBridge?.Invoke();
+            transportationService.OnDestroyBridge(this);
         }
-
-        public void OnDestroyBridge()
-        {
-            OnDestroy?.Invoke(senderModel, this);
-        }
+        
+        
     }
 }

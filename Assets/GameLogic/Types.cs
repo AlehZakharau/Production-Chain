@@ -13,4 +13,11 @@
         GreenResource,
         VioletResource
     }
+
+    public enum BridgeType
+    {
+        SenderPoint,
+        ReceiverPoint,
+        Connection
+    }
 }

@@ -1,118 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using DefaultNamespace.ProductionPoint;
-using GameLogic.ProductionPoint;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using GameLogic.Manufacture;
 
-namespace DefaultNamespace.Transport
+namespace GameLogic.Transport
 {
     public class TransportationService
     {
-        //[SerializeField] private ProductionPointInitialize productionInit;
+        private readonly Tick tick;
+        private readonly TransportViewFactory transportViewFactory;
 
-        [SerializeField] private TransportViewFactory transportViewFactory;
-        // private ResourceType sentResource;
-        // private ResourceType receivedResource;
+        private IManufactureModel sender;
+        private IManufactureModel receiver;
+        
+        private readonly Dictionary<ITransportModel, ITickable> transports = new Dictionary<ITransportModel, ITickable>();
 
-        private IManufactureModel senderPoint;
-        private IManufactureModel receiverPoint;
+        private ITransportModel currentTransport;
+        private bool isCurrentConnected;
 
-        private readonly List<IManufactureModel> senders = new List<IManufactureModel>();
-        private readonly List<ITransportModel> transports = new List<ITransportModel>();
-
-        // public event Action OnCancel;
-        // public event Action OnSuccess;
-            
-
-        // private void Start()
-        // {
-        //     foreach (var modelFactory in productionInit.ProductionModelFactories)
-        //     {
-        //         modelFactory.Model.OnClick += CallTransportService;
-        //     }
-        // }
-
-        private void Update()
+        public TransportationService(TransportViewFactory transportViewFactory, Tick tick)
         {
-            if (Input.GetMouseButtonDown(1))
+            this.tick = tick;
+            this.transportViewFactory = transportViewFactory;
+        }
+
+        public bool AddSenderModel(IManufactureModel manufactureModel)
+        {
+            if (sender == null)
             {
-                Cancel();
-            }
+                sender = manufactureModel;
+                
+                var transportModelFactory = new TransportModelFactory( this);
+                tick.Tickable.Add(transportModelFactory.Tick);
+                var model = transportModelFactory.Model;
+                transports.Add(model, transportModelFactory.Tick);
+                currentTransport = model;
+            
+                transportViewFactory.Initiate();
+                var view = transportViewFactory.View;
 
-            foreach (var transport in transports)
+                var transportControllerFactory = new TransportControllerFactory(model, view);
+                var controller = transportControllerFactory.Controller;
+
+                model.AddSenderModel(sender);
+                return true;
+            }
+            return false;
+        }
+
+        public bool AddReceiverModel(IManufactureModel manufactureModel)
+        {
+            if (receiver == null || sender == manufactureModel) return false;
+            receiver = manufactureModel;
             {
-                transport.Transportation();
+                if (CheckResourceMatch())
+                {
+                    currentTransport.AddReceiverModel(receiver);
+
+                    sender = null;
+                    receiver = null;
+                    currentTransport = null;
+                    return true;
+                }
             }
+            return false;
         }
 
-
-        public void CallTransportService(IManufactureModel productionModel)
+        public void OnDestroyBridge(ITransportModel transportModel)
         {
-            Debug.Log($"Transport service get a message");
-            if (senderPoint == null && !CheckSenders(productionModel))
-            {
-                senderPoint = productionModel;
-                return;
-            }
-
-            if (receiverPoint != null || senderPoint == productionModel) return;
-            receiverPoint = productionModel;
-            // if (CheckResourceMatch())
-            // {
-            //     Success();
-            // }
-            // else
-            // {
-            //     Cancel();
-            //     
-            // }
-        }
-
-        private void Success()
-        {
-            senders.Add(senderPoint);
-            
-            var transportModelFactory = new TransportModelFactory(
-                senderPoint, receiverPoint);
-            var model = transportModelFactory.Model;
-            transports.Add(model);
-            model.OnDestroy += OnDestroyBridge;
-            
-            transportViewFactory.Initiate();
-            var view = transportViewFactory.View;
-
-            var transportControllerFactory = new TransportControllerFactory(model, view);
-            var controller = transportControllerFactory.Controller;
-            
-            model.CreateBridge();
-            
-            senderPoint = null;
-            receiverPoint = null;
-        }
-
-        private void Cancel()
-        {
-            senderPoint = null;
-            receiverPoint = null;
-        }
-
-        private void OnDestroyBridge(IManufactureModel sender, ITransportModel transportModel)
-        {
-            senders.Remove(sender);
+            tick.Tickable.Remove(transports[transportModel]);
             transports.Remove(transportModel);
-            transportModel.OnDestroy -= OnDestroyBridge;
         }
 
-        // private bool CheckResourceMatch()
-        // {
-        //     return receiverPoint.DemandResources.ContainsKey(senderPoint.ProducingResourceType) ||
-        //            receiverPoint.ProductionPointUpdateModel.DemandUpdateResources.
-        //                ContainsKey(senderPoint.ProducingResourceType);
-        // }
-
-        private bool CheckSenders(IManufactureModel sender)
+        private bool CheckResourceMatch()
         {
-            return senders.Contains(sender);
+            return receiver.ManufactureData.DemandProductionResource.Contains(sender.ManufactureData.ProducingResource) ||
+                   receiver.ManufactureData.DemandUpgradeResources.
+                       Contains(sender.ManufactureData.ProducingResource);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace GameLogic.ProductionPoint
+namespace GameLogic.Manufacture
 {
     public class ManufactureData
     {
@@ -23,7 +23,7 @@ namespace GameLogic.ProductionPoint
             demandUpgradeResources = CurrentLevel.demandUpgradeResource;
         
             upgradeResources = new Dictionary<ResourceType, int>();
-            for (int i = 0; i < demandUpgradeResources.Length; i++)
+            for (int i = 0; i < demandUpgradeResources.Count; i++)
             {
                 upgradeResources.Add(demandUpgradeResources[i], CurrentLevel.demandUpgradeResourceCapacity[i]);
             }
@@ -42,16 +42,16 @@ namespace GameLogic.ProductionPoint
         public Vector3 Position { get; set; }
         public bool Extractor { get; }
 
-        public ResourceType[] DemandUpgradeResources => demandUpgradeResources;
-        public ResourceType[] DemandProductionResource => demandProductionResources;
+        public List<ResourceType> DemandUpgradeResources => demandUpgradeResources;
+        public List<ResourceType> DemandProductionResource => demandProductionResources;
 
     
         private int level;
     
         private readonly InitializeData.LevelData[] levelsData;
-        private ResourceType[] demandUpgradeResources;
+        private List<ResourceType> demandUpgradeResources;
         private Dictionary<ResourceType, int> upgradeResources;
-        private readonly ResourceType[] demandProductionResources;
+        private readonly List<ResourceType> demandProductionResources;
         private readonly Dictionary<ResourceType, int> productionResources;
 
         public bool AddDemandResources(ResourceType resource)
@@ -63,7 +63,7 @@ namespace GameLogic.ProductionPoint
                 return true;
             }
 
-            if (demandProductionResources.Length > 0 && demandProductionResources.Contains(resource))
+            if (demandProductionResources.Count > 0 && demandProductionResources.Contains(resource))
             {
                 productionResources[resource]++;
                 return true;
@@ -92,7 +92,7 @@ namespace GameLogic.ProductionPoint
             ProductionSpeed = CurrentLevel.productionSpeed;
             demandUpgradeResources = CurrentLevel.demandUpgradeResource;
             upgradeResources = new Dictionary<ResourceType, int>();
-            for (int i = 0; i < demandUpgradeResources.Length; i++)
+            for (int i = 0; i < demandUpgradeResources.Count; i++)
             {
                 upgradeResources.Add(demandUpgradeResources[i], CurrentLevel.demandUpgradeResourceCapacity[i]);
             }

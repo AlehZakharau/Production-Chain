@@ -1,4 +1,6 @@
-﻿namespace DefaultNamespace.Transport
+﻿using UnityEngine;
+
+namespace GameLogic.Transport
 {
     public interface ITransportController
     {
@@ -15,22 +17,21 @@
             this.model = model;
             this.view = view;
             
-            model.OnCreateBridge += ModelOnOnCreateBridge;
+            model.OnCreateConnection += ModelOnCreateConnection;
             
             view.OnDestroy += ViewOnDestroy;
         }
 
         private void ViewOnDestroy()
         {
-            model.OnDestroyBridge();
+            model.OnDestroy();
             view.OnDestroy -= ViewOnDestroy;
         }
 
-        private void ModelOnOnCreateBridge()
+        private void ModelOnCreateConnection()
         {
             view.SenderPosition = model.SenderPosition;
-            view.ReceiverPosition = model.ReceiverPosition;
-            view.CreateBridge();
+            view.ReceiverPosition = model.SenderPosition + new Vector3(0, -10, 0);
         }
     }
 }

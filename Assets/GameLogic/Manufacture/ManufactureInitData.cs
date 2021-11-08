@@ -1,8 +1,8 @@
 ﻿using System;
-using DefaultNamespace;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic.ProductionPoint
+namespace GameLogic.Manufacture
 {
     public class ManufactureInitData : MonoBehaviour
     {
@@ -20,7 +20,7 @@ namespace GameLogic.ProductionPoint
         }
         private void CheckInitData()
         {
-            if (initData.extractor && initData.demandProducingResources.Length < 1)
+            if (initData.extractor && initData.demandProducingResources.Count < 1)
             {
                 Debug.LogWarning($"<color=blue>Init Data</color>" +
                                  $"Demand Producing resources for {this} is empty");
@@ -28,13 +28,13 @@ namespace GameLogic.ProductionPoint
 
             foreach (var levelData in levelsData)
             {
-                if (levelData.demandUpgradeResource.Length < 1)
+                if (levelData.demandUpgradeResource.Count < 1)
                 {
                     Debug.LogWarning($"<color=blue>Init Data</color>" +
                                      $"Demand Upgrade resources for {this} is empty");
                 }
 
-                if (levelData.demandUpgradeResource.Length !=
+                if (levelData.demandUpgradeResource.Count !=
                     levelData.demandUpgradeResourceCapacity.Length)
                 {
                     Debug.LogWarning($"<color=blue>Init Data</color>" +
@@ -60,7 +60,7 @@ namespace GameLogic.ProductionPoint
         {
             public ResourceType resourceType;
 
-            public ResourceType[] demandProducingResources;
+            public List<ResourceType> demandProducingResources;
 
             public ManufactureType manufactureType;
 
@@ -71,7 +71,7 @@ namespace GameLogic.ProductionPoint
         [Serializable]
         public struct LevelData
         {
-            public  ResourceType[] demandUpgradeResource;
+            public  List<ResourceType> demandUpgradeResource;
             public  int[] demandUpgradeResourceCapacity;
             public  float productionSpeed;
             public  Color color;
