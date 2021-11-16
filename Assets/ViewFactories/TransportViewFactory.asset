@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba29624eadd437980c526447b93ec18, type: 3}
   m_Name: TransportViewFactory
   m_EditorClassIdentifier: 
-  transportView: {fileID: 3444835429881177001, guid: c38dce8434168ab4eb3abdfa31371c2f, type: 3}
+  transportView: {fileID: 3847562172196668970, guid: 08694b5d7ef957c4abc0431369ebfb7c, type: 3}

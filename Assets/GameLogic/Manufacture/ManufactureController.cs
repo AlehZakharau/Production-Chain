@@ -20,8 +20,6 @@
             model.OnUpgrade += ModelOnUpgrade;
             
             view.OnClick += ViewOnClick;
-            
-            view.onCollision += ViewOnCollision;
 
             Init();
         }
@@ -38,12 +36,7 @@
 
         private void ViewOnClick()
         {
-            model.AddSenderModel();
-        }
-
-        private void ViewOnCollision()
-        {
-            model.AddReceiverModel();
+            model.AddManufactureModel();
         }
 
 

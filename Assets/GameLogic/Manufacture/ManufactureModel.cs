@@ -9,8 +9,7 @@ namespace GameLogic.Manufacture
         public event Action OnUpgrade;
         public int ResourceAmount { get; set; }
         public ManufactureData ManufactureData { get; }
-        public void AddSenderModel();
-        public void AddReceiverModel();
+        public void AddManufactureModel();
     }
 
     internal class ManufactureModel : IManufactureModel, ITickable
@@ -57,14 +56,9 @@ namespace GameLogic.Manufacture
             }
         }
 
-        public void AddSenderModel()
+        public void AddManufactureModel()
         {
-            transportationService.AddSenderModel(this);
-        }
-
-        public void AddReceiverModel()
-        {
-            transportationService.AddReceiverModel(this);
+            transportationService.AddManufactureModel(this);
         }
 
         private interface IProducingSystem

@@ -10,6 +10,8 @@ namespace GameLogic.Transport
         public Vector3 SenderPosition { get; set; }
         
         public Vector3 ReceiverPosition { get; set; }
+
+        public void Destroy();
     }
     public class TransportView : MonoBehaviour, ITransportView, IClickable
     {
@@ -31,6 +33,11 @@ namespace GameLogic.Transport
                 receiverPosition = value;
                 SetConnection();
             }
+        }
+
+        public void Destroy()
+        {
+            Destroy(this);
         }
 
         private Material baseMaterial;
@@ -67,7 +74,6 @@ namespace GameLogic.Transport
             if (Input.GetMouseButtonDown(1) && isSelected)
             {
                 OnDestroy?.Invoke();
-                Destroy(gameObject);
                 //Delete Model, Controller and fabrics
                 // or GC destroy it by itself
             }

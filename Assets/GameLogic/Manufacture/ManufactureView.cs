@@ -8,7 +8,6 @@ namespace GameLogic.Manufacture
     {
         public event Action OnClick;
 
-        public event Action onCollision;
         public ManufactureType ManufactureType { get; set; }
         public ResourceType ProducingResourceType { get; set; }
         public int ProducingResource { get; set; }
@@ -16,7 +15,7 @@ namespace GameLogic.Manufacture
         public void OnUpgrade();
     }
 
-    public class ManufactureView : MonoBehaviour, IManufactureView, IClickable, ICollisionally
+    public class ManufactureView : MonoBehaviour, IManufactureView, IClickable
     {
         [SerializeField] private TMP_Text manufactureTypeText;
         [SerializeField] private TMP_Text producingResourceText;
@@ -25,7 +24,6 @@ namespace GameLogic.Manufacture
         [SerializeField] private TMP_Text upgradeResourceText;
 
         public event Action OnClick;
-        public event Action onCollision;
 
         public ManufactureType ManufactureType { get => ManufactureType; 
             set => manufactureTypeText.text = value.ToString(); }
@@ -60,19 +58,16 @@ namespace GameLogic.Manufacture
 
         public void Select()
         {
+            isSelected = true;
             baseMaterial.color = Color.yellow;
             upgradePanel.SetActive(true);
         }
 
         public void UnSelect()
         {
+            isSelected = false;
             baseMaterial.color = baseColor;
             upgradePanel.SetActive(false);
-        }
-
-        public void Execute()
-        {
-           onCollision?.Invoke();
         }
     }
 }

@@ -19,19 +19,33 @@ namespace GameLogic.Transport
             
             model.OnCreateConnection += ModelOnCreateConnection;
             
+            model.OnDestroy += ModelOnDestroy;
+            
             view.OnDestroy += ViewOnDestroy;
+        }
+
+        private void ModelOnDestroy()
+        {
+            Unsubscribe();
+            view.Destroy();
         }
 
         private void ViewOnDestroy()
         {
-            model.OnDestroy();
-            view.OnDestroy -= ViewOnDestroy;
+            model.Destroy();
         }
 
         private void ModelOnCreateConnection()
         {
             view.SenderPosition = model.SenderPosition;
-            view.ReceiverPosition = model.SenderPosition;
+            view.ReceiverPosition = model.ReceiverPosition;
+        }
+
+        private void Unsubscribe()
+        {
+            model.OnCreateConnection -= ModelOnCreateConnection;
+            model.OnDestroy -= ModelOnDestroy;
+            view.OnDestroy -= ViewOnDestroy;
         }
     }
 }

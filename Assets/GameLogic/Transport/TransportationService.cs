@@ -22,52 +22,55 @@ namespace GameLogic.Transport
             this.transportViewFactory = transportViewFactory;
         }
 
-        public bool AddSenderModel(IManufactureModel manufactureModel)
+        public bool AddManufactureModel(IManufactureModel manufactureModel)
         {
             if (sender == null)
             {
                 sender = manufactureModel;
-                
-                var transportModelFactory = new TransportModelFactory( this);
-                tick.Tickable.Add(transportModelFactory.Tick);
-                var model = transportModelFactory.Model;
-                transports.Add(model, transportModelFactory.Tick);
-                currentTransport = model;
-            
-                transportViewFactory.Initiate();
-                var view = transportViewFactory.View;
-
-                var transportControllerFactory = new TransportControllerFactory(model, view);
-                var controller = transportControllerFactory.Controller;
-
-                model.AddSenderModel(sender);
                 return true;
             }
-            return false;
-        }
-
-        public bool AddReceiverModel(IManufactureModel manufactureModel)
-        {
-            if (receiver != null || 
-                sender.ManufactureData.ProducingResource == manufactureModel.ManufactureData.ProducingResource)
-                return false;
-            receiver = manufactureModel;
+            else
             {
-                if (CheckResourceMatch() && CheckTransport() < 2)
+                if (receiver != null ||
+                    sender.ManufactureData.ProducingResource == manufactureModel.ManufactureData.ProducingResource)
                 {
-                    currentTransport.AddReceiverModel(receiver);
-
                     sender = null;
                     receiver = null;
-                    currentTransport = null;
-                    return true;
+                    return false;
                 }
-                else
+                receiver = manufactureModel;
                 {
-                    receiver = null;
+                    if (CheckResourceMatch() && CheckTransport() < 2)
+                    {
+                        CreateTransport(sender, receiver);
+
+                        sender = null;
+                        receiver = null;
+                        currentTransport = null;
+                        return true;
+                    }
                 }
+                sender = null;
+                receiver = null;
+                return false;
             }
-            return false;
+        }
+
+        private void CreateTransport(IManufactureModel sender, IManufactureModel receiver)
+        {
+            var transportModelFactory = new TransportModelFactory( this);
+            tick.Tickable.Add(transportModelFactory.Tick);
+            var model = transportModelFactory.Model;
+            transports.Add(model, transportModelFactory.Tick);
+            currentTransport = model;
+            
+            transportViewFactory.Initiate();
+            var view = transportViewFactory.View;
+
+            var transportControllerFactory = new TransportControllerFactory(model, view);
+            var controller = transportControllerFactory.Controller;
+            
+            model.AddManufactureModel(sender, receiver);
         }
 
         public void OnDestroyBridge(ITransportModel transportModel)
