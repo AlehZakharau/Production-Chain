@@ -1,11 +1,15 @@
 ﻿using System;
 using GameLogic.Manufacture;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace GameLogic.Transport
 {
     public interface ITransportModel
     {
+        public event Action OnConsumption;
+        public event Action OnStopConsumption;
+        
         public event Action OnDestroy;
         public event Action OnCreateConnection;
         
@@ -22,6 +26,8 @@ namespace GameLogic.Transport
     }
     public class TransportModel : ITransportModel, ITickable
     {
+        public event Action OnConsumption;
+        public event Action OnStopConsumption;
         public event Action OnDestroy;
         public event Action OnCreateConnection;
         public IManufactureModel SenderModel => senderModel;
@@ -96,7 +102,16 @@ namespace GameLogic.Transport
             {
                 timer = 0f;
                 senderModel.ResourceAmount--;
-                receiverModel.ManufactureData.AddDemandResources(senderModel.ManufactureData.ProducingResource);
+                var status = receiverModel.ManufactureData.AddDemandResources(senderModel.ManufactureData.ProducingResource);
+                if (status)
+                {
+                    OnConsumption?.Invoke();
+                }
+                else
+                {
+                    OnStopConsumption?.Invoke();
+                }
+                
             }
         }
 
