@@ -13,34 +13,35 @@ namespace GameLogic.Transport
     }
     public class TransportView : MonoBehaviour, ITransportView, IClickable
     {
-        [SerializeField] private TransportPoint senderPoint;
-        [SerializeField] private TransportPoint receiverPoint;
+        //[SerializeField] private TransportPoint senderPoint;
+        //[SerializeField] private TransportPoint receiverPoint;
         [SerializeField] private GameObject connection;
         public event Action onClick;
         public event Action OnDestroy;
 
-        // private Vector3 senderPosition;
-        // private Vector3 receiverPosition;
-        public Vector3 SenderPosition { get => senderPoint.transform.position;
+        private Vector3 senderPosition;
+        private Vector3 receiverPosition;
+        public Vector3 SenderPosition { get; set; }
+
+        public Vector3 ReceiverPosition
+        {
+            get => receiverPosition;
             set
             {
-                if(senderPoint.transform.position == value) return;
-                senderPoint.transform.position = value + new Vector3(0, 3, 0);
+                receiverPosition = value;
+                SetConnection();
             }
         }
-        public Vector3 ReceiverPosition { get => receiverPoint.transform.position;
-            set
-            {
-                if(receiverPoint.transform.position == value) return;
-                receiverPoint.transform.position = value  + new Vector3(0, -3, 0);
-            }
-        }
+
         private Material baseMaterial;
 
         private Color baseColor;
+
+        private bool isSelected;
+
         private void Awake()
         {
-            baseMaterial = GetComponentInChildren<MeshRenderer>().material;
+            baseMaterial = connection.GetComponent<MeshRenderer>().material;
             baseColor = baseMaterial.color;
         }
 
@@ -59,17 +60,17 @@ namespace GameLogic.Transport
 
         private void Update()
         {
-            if (receiverPoint.IsMovable || senderPoint.IsMovable)
-            {
-                SetConnection();
-            }
-            // if (Input.GetMouseButtonDown(1))
+            // if (receiverPoint.IsMovable || senderPoint.IsMovable)
             // {
-            //     OnDestroy?.Invoke();
-            //     Destroy(gameObject);
-            //     //Delete Model, Controller and fabrics
-            //     // or GC destroy it by itself
+            //     SetConnection();
             // }
+            if (Input.GetMouseButtonDown(1) && isSelected)
+            {
+                OnDestroy?.Invoke();
+                Destroy(gameObject);
+                //Delete Model, Controller and fabrics
+                // or GC destroy it by itself
+            }
         }
 
         private void ShowSelected()
@@ -84,12 +85,29 @@ namespace GameLogic.Transport
 
         public void Select()
         {
+            isSelected = true;
             baseMaterial.color = Color.yellow;
         }
 
         public void UnSelect()
         {
+            isSelected = false;
             baseMaterial.color = baseColor;
         }
+        
+        // public Vector3 SenderPosition { get => senderPoint.transform.position;
+        //     set
+        //     {
+        //         if(senderPoint.transform.position == value) return;
+        //         senderPoint.transform.position = value + new Vector3(0, 3, 0);
+        //     }
+        // }
+        // public Vector3 ReceiverPosition { get => receiverPoint.transform.position;
+        //     set
+        //     {
+        //         if(receiverPoint.transform.position == value) return;
+        //         receiverPoint.transform.position = value  + new Vector3(0, -3, 0);
+        //     }
+        // }
     }
 }
