@@ -15,9 +15,10 @@ namespace GameLogic.Transport
             while (IsMovable && Input.GetMouseButton(0))
             {
                 yield return null;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                transform.position = ray.GetPoint(40);
-                Debug.DrawRay(ray.origin, ray.direction * 40, Color.red);
+                var position = Input.mousePosition;
+                position.z = 40;
+                position = Camera.main.ScreenToWorldPoint(position);
+                transform.position = position;
                 if (Input.GetMouseButtonUp(0))
                 {
                     IsMovable = false;
@@ -36,6 +37,21 @@ namespace GameLogic.Transport
 
         public void UnSelect()
         {
+        }
+        
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.layer == 7 && IsMovable)
+            {
+                other.gameObject.GetComponent<ICollisionally>().Execute();
+                IsMovable = false;
+            }
+            
+        }
+
+        private void ConnectPointToManufacture()
+        {
+            IsMovable = false;
         }
     }
 }

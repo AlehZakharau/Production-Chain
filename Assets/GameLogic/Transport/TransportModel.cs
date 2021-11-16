@@ -7,6 +7,9 @@ namespace GameLogic.Transport
     public interface ITransportModel
     {
         public event Action OnCreateConnection;
+        
+        public IManufactureModel SenderModel { get; }
+        public IManufactureModel ReceiverModel { get; }
         public Vector3 SenderPosition { get; set; }
         
         public Vector3 ReceiverPosition { get; set; }
@@ -15,12 +18,15 @@ namespace GameLogic.Transport
 
         public void AddReceiverModel(IManufactureModel receiverModel);
 
+        public bool TransportEquals(ITransportModel other);
         public void OnDestroy();
     }
     public class TransportModel : ITransportModel, ITickable
     {
         public event Action OnCreateConnection;
-        
+        public IManufactureModel SenderModel => senderModel;
+        public IManufactureModel ReceiverModel => receiverModel;
+
         private readonly TransportationService transportationService;
         private IManufactureModel senderModel;
         private IManufactureModel receiverModel;
@@ -88,7 +94,20 @@ namespace GameLogic.Transport
         {
             transportationService.OnDestroyBridge(this);
         }
-        
-        
+
+        public bool TransportEquals(ITransportModel other)
+        {
+            if (other == null) return false;
+
+            if (other.ReceiverModel == null ||
+                (other.SenderModel.ManufactureData.ProducingResource ==
+                 this.senderModel.ManufactureData.ProducingResource &&
+                 other.ReceiverModel.ManufactureData.ProducingResource ==
+                 this.receiverModel.ManufactureData.ProducingResource))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

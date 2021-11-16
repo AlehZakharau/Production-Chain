@@ -13,7 +13,7 @@ namespace GameLogic
         {
             if (Input.GetMouseButtonDown(0))
             {
-                var layerMask = 1 << 6;
+                var layerMask = 1 << 6 | 1<< 7;
                 RaycastHit hit;
                 // Does the ray intersect any objects excluding the player layer
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);

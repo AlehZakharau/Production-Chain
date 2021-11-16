@@ -31,7 +31,7 @@ namespace GameLogic.Transport
         private void ModelOnCreateConnection()
         {
             view.SenderPosition = model.SenderPosition;
-            view.ReceiverPosition = model.SenderPosition + new Vector3(0, -10, 0);
+            view.ReceiverPosition = model.SenderPosition;
         }
     }
 }

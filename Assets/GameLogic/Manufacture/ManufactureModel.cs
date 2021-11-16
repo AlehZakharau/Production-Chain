@@ -6,6 +6,7 @@ namespace GameLogic.Manufacture
 {
     public interface IManufactureModel
     { public event Action OnProducingResource;
+        public event Action OnUpgrade;
         public int ResourceAmount { get; set; }
         public ManufactureData ManufactureData { get; }
         public void AddSenderModel();
@@ -15,7 +16,8 @@ namespace GameLogic.Manufacture
     internal class ManufactureModel : IManufactureModel, ITickable
     {
         public event Action OnProducingResource;
-        
+        public event Action OnUpgrade;
+
         private float timer;
 
         private readonly IProducingSystem producingSystem;
@@ -26,6 +28,8 @@ namespace GameLogic.Manufacture
         public ManufactureModel(ManufactureData manufactureData, TransportationService transportationService)
         {
             ManufactureData = manufactureData;
+
+            manufactureData.OnUpgrade += () => OnUpgrade?.Invoke();
             
             this.transportationService = transportationService;
             

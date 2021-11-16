@@ -48,10 +48,12 @@ namespace GameLogic.Transport
 
         public bool AddReceiverModel(IManufactureModel manufactureModel)
         {
-            if (receiver == null || sender == manufactureModel) return false;
+            if (receiver != null || 
+                sender.ManufactureData.ProducingResource == manufactureModel.ManufactureData.ProducingResource)
+                return false;
             receiver = manufactureModel;
             {
-                if (CheckResourceMatch())
+                if (CheckResourceMatch() && CheckTransport() < 2)
                 {
                     currentTransport.AddReceiverModel(receiver);
 
@@ -59,6 +61,10 @@ namespace GameLogic.Transport
                     receiver = null;
                     currentTransport = null;
                     return true;
+                }
+                else
+                {
+                    receiver = null;
                 }
             }
             return false;
@@ -75,6 +81,19 @@ namespace GameLogic.Transport
             return receiver.ManufactureData.DemandProductionResource.Contains(sender.ManufactureData.ProducingResource) ||
                    receiver.ManufactureData.DemandUpgradeResources.
                        Contains(sender.ManufactureData.ProducingResource);
+        }
+
+        private int CheckTransport()
+        {
+            var index = 0;
+            foreach (var transport in transports)
+            {
+                if (transport.Key.TransportEquals(currentTransport))
+                {
+                    index++;
+                }
+            }
+            return index;
         }
     }
 }

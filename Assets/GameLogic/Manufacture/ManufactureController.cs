@@ -17,6 +17,8 @@
             
             model.OnProducingResource += ModelOnProducingResource;
             
+            model.OnUpgrade += ModelOnUpgrade;
+            
             view.OnClick += ViewOnClick;
             
             view.onCollision += ViewOnCollision;
@@ -24,9 +26,14 @@
             Init();
         }
 
-        private void ViewOnCollision()
+        private void ModelOnProducingResource()
         {
-            model.AddReceiverModel();
+            view.ProducingResource = model.ResourceAmount;
+        }
+
+        private void ModelOnUpgrade()
+        {
+            view.OnUpgrade();
         }
 
         private void ViewOnClick()
@@ -34,9 +41,9 @@
             model.AddSenderModel();
         }
 
-        private void ModelOnProducingResource()
+        private void ViewOnCollision()
         {
-            view.ProducingResource = model.ResourceAmount;
+            model.AddReceiverModel();
         }
 
 

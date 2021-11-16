@@ -7,7 +7,7 @@ namespace GameLogic.Manufacture
 {
     public class ManufactureData
     {
-        public event Action OnUpgradeAvailable;
+        public event Action OnUpgrade;
 
         public ManufactureData(InitializeData.InitData initData, InitializeData.LevelData[] levelsData)
         {
@@ -85,6 +85,15 @@ namespace GameLogic.Manufacture
             return true;
         }
 
+        private void CheckUpgradeOpportunity()
+        {
+            if(upgradeResources.All(resource => resource.Value < 1))
+            {
+                OnUpgrade?.Invoke();
+                Upgrade();
+            }
+        }
+
         private void Upgrade()
         {
             level++;
@@ -97,18 +106,5 @@ namespace GameLogic.Manufacture
                 upgradeResources.Add(demandUpgradeResources[i], CurrentLevel.demandUpgradeResourceCapacity[i]);
             }
         }
-
-        private void CheckUpgradeOpportunity()
-        {
-            if(upgradeResources.All(resource => resource.Value < 1))
-            {
-                OnUpgradeAvailable?.Invoke();
-            }
-        }
-
-    
-
-
-    
     }
 }

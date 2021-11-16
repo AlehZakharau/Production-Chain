@@ -25,14 +25,14 @@ namespace GameLogic.Transport
             set
             {
                 if(senderPoint.transform.position == value) return;
-                senderPoint.transform.position = value;
+                senderPoint.transform.position = value + new Vector3(0, 3, 0);
             }
         }
         public Vector3 ReceiverPosition { get => receiverPoint.transform.position;
             set
             {
                 if(receiverPoint.transform.position == value) return;
-                receiverPoint.transform.position = value;
+                receiverPoint.transform.position = value  + new Vector3(0, -3, 0);
             }
         }
         private Material baseMaterial;

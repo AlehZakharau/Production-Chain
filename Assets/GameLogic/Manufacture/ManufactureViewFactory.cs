@@ -18,10 +18,9 @@ namespace GameLogic.Manufacture
     
         public void Initiate(Transform parent)
         {
-            var instance = Instantiate(productionView);
+            var instance = Instantiate(productionView, parent, true);
             View = instance.GetComponent<IManufactureView>();
             instance.transform.position = new Vector3(0, 0, 0);
-            instance.transform.SetParent(parent);
         }
     }
 
