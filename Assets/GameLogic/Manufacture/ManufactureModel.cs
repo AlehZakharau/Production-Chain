@@ -5,7 +5,10 @@ using UnityEngine;
 namespace GameLogic.Manufacture
 {
     public interface IManufactureModel
-    { public event Action OnProducingResource;
+    {
+        public event Action OnConnectionSuccess;
+        public event Action OnConnectionFail;
+        public event Action OnProducingResource;
         public event Action OnUpgrade;
         public int ResourceAmount { get; set; }
         public ManufactureData ManufactureData { get; }
@@ -14,6 +17,8 @@ namespace GameLogic.Manufacture
 
     internal class ManufactureModel : IManufactureModel, ITickable
     {
+        public event Action OnConnectionSuccess;
+        public event Action OnConnectionFail;
         public event Action OnProducingResource;
         public event Action OnUpgrade;
 
@@ -58,7 +63,15 @@ namespace GameLogic.Manufacture
 
         public void AddManufactureModel()
         {
-            transportationService.AddManufactureModel(this);
+            var status = transportationService.AddManufactureModel(this);
+            if (status)
+            {
+                OnConnectionSuccess?.Invoke();
+            }
+            else
+            {
+                OnConnectionFail?.Invoke();
+            }
         }
 
         private interface IProducingSystem
