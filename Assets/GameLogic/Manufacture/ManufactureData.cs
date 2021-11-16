@@ -97,6 +97,7 @@ namespace GameLogic.Manufacture
         private void Upgrade()
         {
             level++;
+            if(level > levelsData.Length - 1 ) return;
             CurrentLevel = levelsData[level];
             ProductionSpeed = CurrentLevel.productionSpeed;
             demandUpgradeResources = CurrentLevel.demandUpgradeResource;
