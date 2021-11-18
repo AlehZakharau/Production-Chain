@@ -4,24 +4,23 @@ using UnityEngine;
 
 namespace GameLogic.Data
 {
-    [SerializeField]
+    [Serializable]
     public class ManufacturesDates
     {
-        public ManufactureData[] manufactureDates;
+        public ManufactureData[] Manufactures;
 
         public ManufacturesDates(int length)
         {
-            manufactureDates = new ManufactureData[length];
+            Manufactures = new ManufactureData[length];
         }
     }
     
     [Serializable]
     public class ManufactureData
     {
-        public ManufactureData(string name)
-        {
-            this.name = name;
-        }
-        public string name;
+        public int resourceAmount;
+        public int level;
+        public int[] demandResources;
+        public int[] upgradeResources;
     }
 }

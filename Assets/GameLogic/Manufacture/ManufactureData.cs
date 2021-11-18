@@ -42,6 +42,16 @@ namespace GameLogic.Manufacture
         public Vector3 Position { get; set; }
         public bool Extractor { get; }
 
+        public int Level
+        {
+            get => level;
+            set
+            {
+                level = value;
+                Upgrade(level);
+            }
+        }
+
         public List<ResourceType> DemandUpgradeResources => demandUpgradeResources;
         public List<ResourceType> DemandProductionResource => demandProductionResources;
 
@@ -90,13 +100,12 @@ namespace GameLogic.Manufacture
             if(upgradeResources.All(resource => resource.Value < 1))
             {
                 OnUpgrade?.Invoke();
-                Upgrade();
+                Upgrade(level + 1);
             }
         }
 
-        private void Upgrade()
+        private void Upgrade(int level)
         {
-            level++;
             if(level > levelsData.Length - 1 ) return;
             CurrentLevel = levelsData[level];
             ProductionSpeed = CurrentLevel.productionSpeed;
@@ -105,6 +114,38 @@ namespace GameLogic.Manufacture
             for (int i = 0; i < demandUpgradeResources.Count; i++)
             {
                 upgradeResources.Add(demandUpgradeResources[i], CurrentLevel.demandUpgradeResourceCapacity[i]);
+            }
+        }
+
+        public int[] GetDemandResourceAmount()
+        {
+            return productionResources.Values.ToArray();
+        }
+
+        public void SetDemandResourceAmount(int[] values)
+        {
+            // if (values.Length != productionResources.Count)
+            //     throw new Exception();
+            var index = 0;
+            foreach (var resource in productionResources.Keys.ToList())
+            {
+                productionResources[resource] = values[index++];
+            }
+        }
+
+        public int[] GetUpgradeResourceAmount()
+        {
+            return upgradeResources.Values.ToArray();
+        }
+        
+        public void SetUpgradeResourceAmount(int[] values)
+        {
+            // if (values.Length != productionResources.Count)
+            //     throw new Exception();
+            var index = 0;
+            foreach (var resource in upgradeResources.Keys.ToList())
+            {
+                upgradeResources[resource] = values[index++];
             }
         }
     }
