@@ -13,13 +13,13 @@ namespace GameLogic
         {
             if (Input.GetMouseButtonDown(0))
             {
+                currentObject?.UnSelect();
                 var layerMask = 1 << 6 | 1<< 7;
                 RaycastHit hit;
                 // Does the ray intersect any objects excluding the player layer
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
-                    currentObject?.UnSelect();
                     currentObject = hit.collider.GetComponent<IClickable>();
                     currentObject.Select();
                     currentObject.Click();

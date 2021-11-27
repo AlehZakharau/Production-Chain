@@ -9,6 +9,7 @@ namespace GameLogic.Manufacture
         public event Action OnClick;
 
         public ManufactureType ManufactureType { get; set; }
+        public int Level { get; set; }
         public ResourceType ProducingResourceType { get; set; }
         public int ProducingResource { get; set; }
         public Vector3 Position { get; set; }
@@ -23,12 +24,27 @@ namespace GameLogic.Manufacture
         [SerializeField] private GameObject upgradePanel;
         [SerializeField] private TMP_Text upgradeResourceText;
 
+        [SerializeField] private TMP_Text levelText;
+        [SerializeField] private TMP_Text producingResourceText2;
+
         public event Action OnClick;
 
         public ManufactureType ManufactureType { get => ManufactureType; 
             set => manufactureTypeText.text = value.ToString(); }
-        public ResourceType ProducingResourceType { get => ProducingResourceType; 
-            set => producingResourceText.text = value.ToString(); }
+
+        public int Level { get => Level = 0; set =>
+            levelText.text = $"Level " + value; }
+
+        public ResourceType ProducingResourceType
+        {
+            get => ProducingResourceType;
+            set
+            {
+                producingResourceText2.text = value.ToString();
+                producingResourceText.text = value.ToString();
+            }
+        }
+
         public int ProducingResource { get => ProducingResource; 
             set => producingResourceAmountText.text = value.ToString(); }
         public Vector3 Position { get => Position; 
@@ -48,6 +64,7 @@ namespace GameLogic.Manufacture
         public void OnUpgrade()
         {
             Debug.Log($"Upgrade {this}");
+            Level++;
         }
 
         public void Click()
