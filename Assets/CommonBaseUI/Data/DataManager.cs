@@ -8,6 +8,9 @@ namespace UI.Data
 {
     public class DataManager : MonoBehaviour
     {
+        [SerializeField] private SaveLoadJsonWindows saveLoadJsonWindows;
+        [SerializeField] private SaveLoadJsonWeb saveLoadJsonWeb;
+        
         private readonly Data data = new Data();
 
         private const string Filename = "GameData";
@@ -98,10 +101,10 @@ namespace UI.Data
         private void Start()
         {
             #if UNITY_WEBGL
-                saveLoadJson = new SaveLoadJsonWeb();
+                saveLoadJson = saveLoadJsonWeb;
                 saveLoadJson.LoadFromJson(FILENAME, data);
             #else
-                saveLoadJson = new SaveLoadJsonWindows();
+                saveLoadJson = saveLoadJsonWindows;
                 saveLoadJson.LoadFromJson(Filename, data);
             #endif
         }
