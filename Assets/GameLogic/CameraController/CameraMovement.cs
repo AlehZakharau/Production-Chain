@@ -9,6 +9,7 @@ namespace GameLogic
 
         [SerializeField] private float speedButtons = 2f;
         [SerializeField] private float speedMouse = 2f;
+        [SerializeField] private float speedScroll = 0.01f;
 
         [SerializeField] private int boundary = 1;
 
@@ -28,14 +29,17 @@ namespace GameLogic
         {
             var direction = playerInput.Camera.Move.ReadValue<Vector2>();
             var cursorPosition = playerInput.Camera.CursorPosition.ReadValue<Vector2>();
+            var scroll = playerInput.Camera.Scroll.ReadValue<Vector2>();
             
-            Move(direction);
+            Move(direction, scroll.y);
             MoveByCursor(cursorPosition);
         }
 
-        private void Move(Vector2 direction)
+        private void Move(Vector2 direction, float scroll)
         {
-            var move = new Vector3(direction.x, direction.y, 0);
+            scroll *= speedScroll * Time.deltaTime;
+            
+            var move = new Vector3(direction.x, direction.y, scroll);
 
             transform.position += move * speedButtons * Time.deltaTime;
         }
