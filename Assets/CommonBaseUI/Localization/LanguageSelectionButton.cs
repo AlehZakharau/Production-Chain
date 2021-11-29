@@ -1,13 +1,11 @@
-﻿using System;
-using Assets.SimpleLocalization;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UI.Data;
+﻿using CommonBaseUI.Data;
+using CommonBaseUI.Localization.LocalizationAsset;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
+namespace CommonBaseUI.Localization
+{
+    /// <summary>
     /// Класс для смены языка
     /// Пока (в тестовом режиме) панель c кнопочками для смены языка висит на панели настроек
     /// Потом нужно будет разобраться, как настраивать язык средствами стима
@@ -39,3 +37,4 @@ using UnityEngine.UI;
             russianButton.onClick.RemoveListener(delegate { ChangeLanguage(Languages.Russian); });
         }
     }
+}

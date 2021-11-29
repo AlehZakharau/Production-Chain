@@ -1,8 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace DefaultNamespace
+namespace CommonBaseUI.UIController
 {
     public class ButtonView : UnityEngine.MonoBehaviour
     {

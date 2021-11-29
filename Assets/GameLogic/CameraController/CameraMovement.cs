@@ -4,7 +4,8 @@ using UnityEngine;
 namespace GameLogic
 {
     public class CameraMovement : MonoBehaviour
-    { 
+    {
+        [SerializeField] private PlayerInputInstance playerInputI;
         private PlayerInput playerInput;
 
         [SerializeField] private float speedButtons = 2f;
@@ -16,10 +17,9 @@ namespace GameLogic
         private int width;
         private int height;
 
-        private void Awake()
+        private void Start()
         {
-            playerInput = new PlayerInput();
-            playerInput.Enable();
+            playerInput = playerInputI.PlayerInput;
 
             width = Screen.width;
             height = Screen.height;

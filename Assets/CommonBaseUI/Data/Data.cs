@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Assets.SimpleLocalization;
-using UnityEditor.Experimental.GraphView;
+using CommonBaseUI.Localization.LocalizationAsset;
+using CommonBaseUI.Settings;
 
-namespace UI.Data
+namespace CommonBaseUI.Data
 {
     [Serializable]
     public sealed class Data : ISerializable

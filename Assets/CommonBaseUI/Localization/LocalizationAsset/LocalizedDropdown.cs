@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.SimpleLocalization
+namespace CommonBaseUI.Localization.LocalizationAsset
 {
 	/// <summary>
 	/// Для локализации выпадающих списков

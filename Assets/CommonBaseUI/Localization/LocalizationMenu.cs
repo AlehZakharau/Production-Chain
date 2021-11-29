@@ -1,8 +1,8 @@
-﻿using TMPro;
-using UI.Data;
+﻿using CommonBaseUI.Localization.LocalizationAsset;
+using TMPro;
 using UnityEngine;
 
-namespace Assets.SimpleLocalization
+namespace CommonBaseUI.Localization
 {
     public class LocalizationMenu : MonoBehaviour
     {

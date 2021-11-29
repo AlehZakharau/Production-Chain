@@ -1,7 +1,8 @@
+using CommonBaseUI.Localization.LocalizationAsset;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.SimpleLocalization.Editor
+namespace CommonBaseUI.Localization.Editor
 {
 	[CustomEditor(typeof(LocalizationSync))]
     public class LocalizationSyncEditor : UnityEditor.Editor

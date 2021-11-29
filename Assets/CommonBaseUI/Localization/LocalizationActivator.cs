@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections;
-using UI.Data;
+﻿using System.Collections;
+using CommonBaseUI.Data;
+using CommonBaseUI.Localization.LocalizationAsset;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-namespace Assets.SimpleLocalization
+namespace CommonBaseUI.Localization
 {
     public class LocalizationActivator : MonoBehaviour
     {

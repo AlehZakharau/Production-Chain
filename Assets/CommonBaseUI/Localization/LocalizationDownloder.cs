@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.IO;
+using CommonBaseUI.Localization.LocalizationAsset;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Assets.SimpleLocalization
+namespace CommonBaseUI.Localization
 {
     public class LocalizationDownloder : MonoBehaviour
     {

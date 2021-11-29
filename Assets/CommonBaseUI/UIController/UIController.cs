@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DefaultNamespace
+namespace CommonBaseUI.UIController
 {
     public class UIController : MonoBehaviour
     {
@@ -10,8 +11,18 @@ namespace DefaultNamespace
         [SerializeField] private Canvas settingsMenu;
         [SerializeField] private Canvas creditsMenu;
         [SerializeField] private Canvas pauseMenu;
+
+        [SerializeField] private UIKeywordInputView inputView;
         
         private Canvas currentMenu;
+
+        public event Action OnCloseButtonPressed;
+
+        private void Start()
+        {
+            currentMenu = mainMenu;
+            inputView.OnCloseButtonPressed += () => OnCloseButtonPressed?.Invoke();
+        }
 
         public void PressButton(ButtonJobs buttonJobs)
         {

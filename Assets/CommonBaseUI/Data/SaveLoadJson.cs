@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.IO;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using UnityEngine;
-using UnityEngine.Networking;
 
-namespace UI.Data
+namespace CommonBaseUI.Data
 {
     public abstract class SaveLoadJson : MonoBehaviour
     {

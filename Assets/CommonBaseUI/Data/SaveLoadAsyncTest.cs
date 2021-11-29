@@ -1,19 +1,19 @@
-﻿using System.Collections;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace CommonBaseUI.Data
 {
-    public sealed class SaveLoadJsonWeb : SaveLoadJson
+    public class SaveLoadAsyncTest : SaveLoadJson 
     {
         public override void SaveToJson(string name, ISerializable data)
-        {
-            StartCoroutine(SaveToJsonWeb(name, data));
+        { 
+            //SaveToJsonWeb(name, data);
         }
-
-        private IEnumerator SaveToJsonWeb(string name, ISerializable data)
+    
+        private async Task SaveToJsonWeb(string name, ISerializable data)
         {
             string filePath = Path.Combine(Path.Combine
                 (Application.streamingAssetsPath, name + ".json"));
@@ -22,7 +22,10 @@ namespace CommonBaseUI.Data
 
             using (UnityWebRequest www = UnityWebRequest.Put(filePath, jsonData))
             {
-                yield return www.SendWebRequest();
+                while (!www.isDone)
+                {
+                    await Task.Yield();
+                }
 
                 if (www.result != UnityWebRequest.Result.Success)
                 {
@@ -37,10 +40,10 @@ namespace CommonBaseUI.Data
 
         public override void LoadFromJson(string name, ISerializable data)
         {
-            StartCoroutine(LoadDataFromJsonWeb(name, data));
+            base.LoadFromJson(name, data);
         }
-
-        private IEnumerator LoadDataFromJsonWeb(string name, ISerializable data)
+    
+        private async void LoadDataFromJsonWeb(string name, ISerializable data)
         {
             //string filePath = Path.Combine(Application.dataPath, "SaveData.json");
             string filePath = Path.Combine(Path.Combine
@@ -48,7 +51,10 @@ namespace CommonBaseUI.Data
             UnityWebRequest www = new UnityWebRequest(filePath);
             www.downloadHandler = new DownloadHandlerBuffer();
 
-            yield return www.SendWebRequest();
+            while (!www.isDone)
+            {
+                await Task.Yield();
+            }
 
             if (www.result != UnityWebRequest.Result.Success)
             {

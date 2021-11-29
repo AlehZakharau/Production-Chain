@@ -1,4 +1,4 @@
-namespace Assets.SimpleLocalization
+namespace CommonBaseUI.Localization.LocalizationAsset
 {
     public enum Languages
     {

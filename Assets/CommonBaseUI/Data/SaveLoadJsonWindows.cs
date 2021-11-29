@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace UI.Data
+namespace CommonBaseUI.Data
 {
     public sealed class SaveLoadJsonWindows : SaveLoadJson
     {

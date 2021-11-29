@@ -1,4 +1,4 @@
-﻿namespace DefaultNamespace
+﻿namespace CommonBaseUI.UIController
 {
     public enum ButtonJobs
     {

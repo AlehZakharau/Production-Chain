@@ -1,10 +1,10 @@
 ﻿using System;
+using CommonBaseUI.Data;
 using TMPro;
-using UI.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace CommonBaseUI.Settings
 {
     public enum ScreenResolutions16and9
     {

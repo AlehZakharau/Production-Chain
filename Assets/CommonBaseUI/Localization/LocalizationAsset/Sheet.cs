@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.SimpleLocalization
+namespace CommonBaseUI.Localization.LocalizationAsset
 {
 	[Serializable]
 	public struct Sheet

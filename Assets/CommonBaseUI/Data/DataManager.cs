@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using System.IO;
-using Assets.SimpleLocalization;
+﻿using CommonBaseUI.Localization.LocalizationAsset;
+using CommonBaseUI.Settings;
 using UnityEngine;
-using UnityEngine.Networking;
 
-namespace UI.Data
+namespace CommonBaseUI.Data
 {
     public class DataManager : MonoBehaviour
     {
         [SerializeField] private SaveLoadJsonWindows saveLoadJsonWindows;
         [SerializeField] private SaveLoadJsonWeb saveLoadJsonWeb;
+        [SerializeField] private SaveLoadAsyncTest saveLoadAsyncTest;
         
         private readonly Data data = new Data();
 
@@ -107,6 +106,9 @@ namespace UI.Data
                 saveLoadJson = saveLoadJsonWindows;
                 saveLoadJson.LoadFromJson(Filename, data);
             #endif
+
+            saveLoadJson = saveLoadAsyncTest;
+            saveLoadJson.SaveToJson("ABC", data);
         }
     }
 }

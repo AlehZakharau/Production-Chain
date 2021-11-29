@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.IO;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Assets.SimpleLocalization
+namespace CommonBaseUI.Localization.LocalizationAsset
 {
     /// <summary>
     /// Загружает словарь с гугл-таблиц в проект

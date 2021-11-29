@@ -41,6 +41,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""CloseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""b0000e55-a609-43f3-afd6-176e0874774c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -186,6 +194,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4baec35d-268a-49e2-9b88-40f1bb39d8b3"",
+                    ""path"": ""<Keyboard>/Escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""New control scheme"",
+                    ""action"": ""CloseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -203,6 +222,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
         m_Camera_CursorPosition = m_Camera.FindAction("CursorPosition", throwIfNotFound: true);
         m_Camera_Scroll = m_Camera.FindAction("Scroll", throwIfNotFound: true);
+        m_Camera_CloseMenu = m_Camera.FindAction("CloseMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -255,6 +275,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Camera_Move;
     private readonly InputAction m_Camera_CursorPosition;
     private readonly InputAction m_Camera_Scroll;
+    private readonly InputAction m_Camera_CloseMenu;
     public struct CameraActions
     {
         private @PlayerInput m_Wrapper;
@@ -262,6 +283,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_Camera_Move;
         public InputAction @CursorPosition => m_Wrapper.m_Camera_CursorPosition;
         public InputAction @Scroll => m_Wrapper.m_Camera_Scroll;
+        public InputAction @CloseMenu => m_Wrapper.m_Camera_CloseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -280,6 +302,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Scroll.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnScroll;
                 @Scroll.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnScroll;
                 @Scroll.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnScroll;
+                @CloseMenu.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
+                @CloseMenu.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
+                @CloseMenu.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
             }
             m_Wrapper.m_CameraActionsCallbackInterface = instance;
             if (instance != null)
@@ -293,6 +318,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @Scroll.started += instance.OnScroll;
                 @Scroll.performed += instance.OnScroll;
                 @Scroll.canceled += instance.OnScroll;
+                @CloseMenu.started += instance.OnCloseMenu;
+                @CloseMenu.performed += instance.OnCloseMenu;
+                @CloseMenu.canceled += instance.OnCloseMenu;
             }
         }
     }
@@ -311,5 +339,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnCursorPosition(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
+        void OnCloseMenu(InputAction.CallbackContext context);
     }
 }

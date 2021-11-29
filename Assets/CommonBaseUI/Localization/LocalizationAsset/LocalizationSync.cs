@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 //Пока не удалять!
 //адрес нашей таблички с локализацией: https://docs.google.com/spreadsheets/d/13TrArKvhb3Su_6cTn_bPaQTtVYq2mCWpNrGl0Ep_5bY/edit?usp=sharing
 
-namespace Assets.SimpleLocalization
+namespace CommonBaseUI.Localization.LocalizationAsset
 {
 	/// <summary>
 	/// Downloads spritesheets from Google Spreadsheet and saves them to Resources. My laziness made me to create it.
