@@ -49,6 +49,14 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""80d882ac-89f2-4abf-a8d1-67021c12d516"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -205,6 +213,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""action"": ""CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6bcd21e0-ab10-4c9e-bf28-675383c0a843"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -223,6 +242,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         m_Camera_CursorPosition = m_Camera.FindAction("CursorPosition", throwIfNotFound: true);
         m_Camera_Scroll = m_Camera.FindAction("Scroll", throwIfNotFound: true);
         m_Camera_CloseMenu = m_Camera.FindAction("CloseMenu", throwIfNotFound: true);
+        m_Camera_Click = m_Camera.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -276,6 +296,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Camera_CursorPosition;
     private readonly InputAction m_Camera_Scroll;
     private readonly InputAction m_Camera_CloseMenu;
+    private readonly InputAction m_Camera_Click;
     public struct CameraActions
     {
         private @PlayerInput m_Wrapper;
@@ -284,6 +305,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         public InputAction @CursorPosition => m_Wrapper.m_Camera_CursorPosition;
         public InputAction @Scroll => m_Wrapper.m_Camera_Scroll;
         public InputAction @CloseMenu => m_Wrapper.m_Camera_CloseMenu;
+        public InputAction @Click => m_Wrapper.m_Camera_Click;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -305,6 +327,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @CloseMenu.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
                 @CloseMenu.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
                 @CloseMenu.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
+                @Click.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnClick;
             }
             m_Wrapper.m_CameraActionsCallbackInterface = instance;
             if (instance != null)
@@ -321,6 +346,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 @CloseMenu.started += instance.OnCloseMenu;
                 @CloseMenu.performed += instance.OnCloseMenu;
                 @CloseMenu.canceled += instance.OnCloseMenu;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
             }
         }
     }
@@ -340,5 +368,6 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         void OnCursorPosition(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
         void OnCloseMenu(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
     }
 }
