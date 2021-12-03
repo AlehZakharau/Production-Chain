@@ -1,17 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+using System.Runtime.Serialization;
 
-namespace GameLogic.Data
+namespace CommonBaseUI.Data
 {
     [Serializable]
-    public class ManufacturesDates
+    public class ManufacturesDates : ISerializable
     {
         public ManufactureData[] Manufactures;
 
         public ManufacturesDates(int length)
         {
             Manufactures = new ManufactureData[length];
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            throw new NotImplementedException();
         }
     }
     

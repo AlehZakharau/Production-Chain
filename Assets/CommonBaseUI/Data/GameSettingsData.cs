@@ -6,7 +6,7 @@ using CommonBaseUI.Settings;
 namespace CommonBaseUI.Data
 {
     [Serializable]
-    public sealed class Data : ISerializable
+    public sealed class GameSettingsData : ISerializable
     {
         public float soundVolume = 1;
         public float musicVolume = 1;

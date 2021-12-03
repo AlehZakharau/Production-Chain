@@ -11,12 +11,12 @@ namespace CommonBaseUI.Settings
         [SerializeField] private Slider sliderSound;
         [SerializeField] private Slider sliderMusic;
         //[SerializeField] private Slider sliderVoice;
-        [SerializeField] private DataManager data;
+        [SerializeField] private GameSettingsDataManager gameSettingsDataManager;
         
         private void Start()
         {
-            sliderSound.value = data.SoundVolume;
-            sliderMusic.value = data.MusicVolume;
+            sliderSound.value = gameSettingsDataManager.SoundVolume;
+            sliderMusic.value = gameSettingsDataManager.MusicVolume;
             //sliderVoice.value = data.VoiceVolume;
             mixer.SetFloat("SoundVolume", Mathf.Log10(sliderSound.value) * 20);
             mixer.SetFloat("MusicVolume", Mathf.Log10(sliderMusic.value) * 20);
@@ -27,14 +27,14 @@ namespace CommonBaseUI.Settings
         {
             var volume = Mathf.Log10(sliderSound.value) * 20;
             mixer.SetFloat("SoundVolume", volume);
-            data.SoundVolume = sliderSound.value;
+            gameSettingsDataManager.SoundVolume = sliderSound.value;
         }
 
         public void ChangeMusicVolume()
         {
             var volume = Mathf.Log10(sliderMusic.value) * 20;
             mixer.SetFloat("MusicVolume", volume);
-            data.MusicVolume = sliderMusic.value;
+            gameSettingsDataManager.MusicVolume = sliderMusic.value;
         }
 
         // public void ChangeVoiceVolume()

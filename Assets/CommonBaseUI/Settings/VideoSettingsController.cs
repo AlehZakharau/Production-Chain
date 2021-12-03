@@ -19,11 +19,11 @@ namespace CommonBaseUI.Settings
         [SerializeField] private Toggle fullScreen;
         [SerializeField] private TMP_Dropdown resolution;
 
-        [SerializeField] private DataManager data;
+        [SerializeField] private GameSettingsDataManager gameSettingsDataManager;
 
         private void Start()
         {
-            resolution.value = (int)data.Resolution;
+            resolution.value = (int)gameSettingsDataManager.Resolution;
         }
 
         public void ChangeScreenResolution()
@@ -31,14 +31,14 @@ namespace CommonBaseUI.Settings
             var res = GetScreenParameters((ScreenResolutions16and9)resolution.value);
             
             Screen.SetResolution(res.Width, res.Height, Screen.fullScreen);
-            data.ResWidth = res.Width;
-            data.ResHeight = res.Width;
+            gameSettingsDataManager.ResWidth = res.Width;
+            gameSettingsDataManager.ResHeight = res.Width;
         }
 
         public void ChangeScreenMode()
         {
             Screen.fullScreen = fullScreen.isOn;
-            data.FullScreen = fullScreen.isOn;
+            gameSettingsDataManager.FullScreen = fullScreen.isOn;
         }
         
         private ScreenResolution GetScreenParameters(ScreenResolutions16and9 screenResolution)

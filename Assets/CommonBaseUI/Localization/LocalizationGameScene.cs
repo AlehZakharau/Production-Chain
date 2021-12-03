@@ -8,7 +8,7 @@ namespace CommonBaseUI.Localization
     public class LocalizationGameScene : MonoBehaviour
     {
 
-        [SerializeField] private DataManager data;
+        [SerializeField] private GameSettingsDataManager gameSettingsDataManager;
         [SerializeField] private TextMeshProUGUI introText;
         [SerializeField] private TextMeshProUGUI gameOverText;
         [SerializeField] private TextMeshProUGUI epilogueText;

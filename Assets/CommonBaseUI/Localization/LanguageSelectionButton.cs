@@ -13,7 +13,7 @@ namespace CommonBaseUI.Localization
     public class LanguageSelectionButton : MonoBehaviour
     {
 
-        [SerializeField] private DataManager data;
+        [SerializeField] private GameSettingsDataManager gameSettingsDataManager;
         [SerializeField] private Button englishButton;
         [SerializeField] private Button russianButton;
 
@@ -26,7 +26,7 @@ namespace CommonBaseUI.Localization
         private void ChangeLanguage(Languages language)
         {
 
-            data.Languages = language;
+            gameSettingsDataManager.Languages = language;
             
             LocalizationManager.Language = language.ToString();
         }

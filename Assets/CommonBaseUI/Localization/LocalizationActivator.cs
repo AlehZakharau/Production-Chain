@@ -7,13 +7,13 @@ namespace CommonBaseUI.Localization
 {
     public class LocalizationActivator : MonoBehaviour
     {
-        [SerializeField] private DataManager data;
+        [SerializeField] private GameSettingsDataManager gameSettingsDataManager;
         
         public void Start()
         {
             LocalizationManager.Read(); //читаем словарь из файла
             
-            switch (data.Languages)
+            switch (gameSettingsDataManager.Languages)
             {
                 case Languages.Russian:
                     LocalizationManager.Language = "Russian";
