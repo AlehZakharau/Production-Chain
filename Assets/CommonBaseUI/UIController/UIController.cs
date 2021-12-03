@@ -1,4 +1,5 @@
 ﻿using System;
+using CommonBaseUI.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -34,6 +35,12 @@ namespace CommonBaseUI.UIController
                     break;
                 case ButtonJobs.NewGame:
                     SceneManager.LoadScene(1);
+                    break;
+                case ButtonJobs.Save:
+                    DataManager.Instance.Save();
+                    break;
+                case ButtonJobs.Load:
+                    DataManager.Instance.Load();
                     break;
                 case ButtonJobs.OpenMain:
                     OpenNewMenu(mainMenu);

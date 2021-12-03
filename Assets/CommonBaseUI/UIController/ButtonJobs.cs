@@ -9,6 +9,8 @@
         NewGame,
         Exit,
         Pause,
-        Continue
+        Continue,
+        Save,
+        Load
     }
 }
