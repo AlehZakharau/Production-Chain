@@ -1,5 +1,6 @@
 ﻿using System;
 using GameLogic;
+using GameLogic.CameraController;
 using UnityEngine;
 
 namespace CommonBaseUI.UIController

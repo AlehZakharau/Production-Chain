@@ -3,7 +3,9 @@
     public enum ManufactureType
     {
         Extractor,
-        Refinery
+        Refinery,
+        Tower,
+        Artifact
     }
     
     public enum ResourceType
@@ -12,12 +14,5 @@
         OrangeResource,
         GreenResource,
         VioletResource
-    }
-
-    public enum BridgeType
-    {
-        SenderPoint,
-        ReceiverPoint,
-        Connection
     }
 }
