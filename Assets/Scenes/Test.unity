@@ -413,7 +413,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 100467390}
-  playerInputI: {fileID: 674419712}
+  clicableLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &197023056
 GameObject:
   m_ObjectHideFlags: 0
