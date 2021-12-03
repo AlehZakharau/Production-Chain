@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class @PlayerInput : IInputActionCollection, IDisposable
+namespace GameLogic.CameraController
 {
-    public InputActionAsset asset { get; }
-    public @PlayerInput()
+    public class @PlayerInput : IInputActionCollection, IDisposable
     {
-        asset = InputActionAsset.FromJson(@"{
+        public InputActionAsset asset { get; }
+        public @PlayerInput()
+        {
+            asset = InputActionAsset.FromJson(@"{
     ""name"": ""New Controls"",
     ""maps"": [
         {
@@ -236,138 +238,139 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         }
     ]
 }");
+            // Camera
+            m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
+            m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
+            m_Camera_CursorPosition = m_Camera.FindAction("CursorPosition", throwIfNotFound: true);
+            m_Camera_Scroll = m_Camera.FindAction("Scroll", throwIfNotFound: true);
+            m_Camera_CloseMenu = m_Camera.FindAction("CloseMenu", throwIfNotFound: true);
+            m_Camera_Click = m_Camera.FindAction("Click", throwIfNotFound: true);
+        }
+
+        public void Dispose()
+        {
+            UnityEngine.Object.Destroy(asset);
+        }
+
+        public InputBinding? bindingMask
+        {
+            get => asset.bindingMask;
+            set => asset.bindingMask = value;
+        }
+
+        public ReadOnlyArray<InputDevice>? devices
+        {
+            get => asset.devices;
+            set => asset.devices = value;
+        }
+
+        public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
+
+        public bool Contains(InputAction action)
+        {
+            return asset.Contains(action);
+        }
+
+        public IEnumerator<InputAction> GetEnumerator()
+        {
+            return asset.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Enable()
+        {
+            asset.Enable();
+        }
+
+        public void Disable()
+        {
+            asset.Disable();
+        }
+
         // Camera
-        m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
-        m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
-        m_Camera_CursorPosition = m_Camera.FindAction("CursorPosition", throwIfNotFound: true);
-        m_Camera_Scroll = m_Camera.FindAction("Scroll", throwIfNotFound: true);
-        m_Camera_CloseMenu = m_Camera.FindAction("CloseMenu", throwIfNotFound: true);
-        m_Camera_Click = m_Camera.FindAction("Click", throwIfNotFound: true);
-    }
-
-    public void Dispose()
-    {
-        UnityEngine.Object.Destroy(asset);
-    }
-
-    public InputBinding? bindingMask
-    {
-        get => asset.bindingMask;
-        set => asset.bindingMask = value;
-    }
-
-    public ReadOnlyArray<InputDevice>? devices
-    {
-        get => asset.devices;
-        set => asset.devices = value;
-    }
-
-    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
-
-    public bool Contains(InputAction action)
-    {
-        return asset.Contains(action);
-    }
-
-    public IEnumerator<InputAction> GetEnumerator()
-    {
-        return asset.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    public void Enable()
-    {
-        asset.Enable();
-    }
-
-    public void Disable()
-    {
-        asset.Disable();
-    }
-
-    // Camera
-    private readonly InputActionMap m_Camera;
-    private ICameraActions m_CameraActionsCallbackInterface;
-    private readonly InputAction m_Camera_Move;
-    private readonly InputAction m_Camera_CursorPosition;
-    private readonly InputAction m_Camera_Scroll;
-    private readonly InputAction m_Camera_CloseMenu;
-    private readonly InputAction m_Camera_Click;
-    public struct CameraActions
-    {
-        private @PlayerInput m_Wrapper;
-        public CameraActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Camera_Move;
-        public InputAction @CursorPosition => m_Wrapper.m_Camera_CursorPosition;
-        public InputAction @Scroll => m_Wrapper.m_Camera_Scroll;
-        public InputAction @CloseMenu => m_Wrapper.m_Camera_CloseMenu;
-        public InputAction @Click => m_Wrapper.m_Camera_Click;
-        public InputActionMap Get() { return m_Wrapper.m_Camera; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
-        public void SetCallbacks(ICameraActions instance)
+        private readonly InputActionMap m_Camera;
+        private ICameraActions m_CameraActionsCallbackInterface;
+        private readonly InputAction m_Camera_Move;
+        private readonly InputAction m_Camera_CursorPosition;
+        private readonly InputAction m_Camera_Scroll;
+        private readonly InputAction m_Camera_CloseMenu;
+        private readonly InputAction m_Camera_Click;
+        public struct CameraActions
         {
-            if (m_Wrapper.m_CameraActionsCallbackInterface != null)
+            private @PlayerInput m_Wrapper;
+            public CameraActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Move => m_Wrapper.m_Camera_Move;
+            public InputAction @CursorPosition => m_Wrapper.m_Camera_CursorPosition;
+            public InputAction @Scroll => m_Wrapper.m_Camera_Scroll;
+            public InputAction @CloseMenu => m_Wrapper.m_Camera_CloseMenu;
+            public InputAction @Click => m_Wrapper.m_Camera_Click;
+            public InputActionMap Get() { return m_Wrapper.m_Camera; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
+            public void SetCallbacks(ICameraActions instance)
             {
-                @Move.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnMove;
-                @CursorPosition.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnCursorPosition;
-                @CursorPosition.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnCursorPosition;
-                @CursorPosition.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnCursorPosition;
-                @Scroll.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnScroll;
-                @Scroll.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnScroll;
-                @Scroll.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnScroll;
-                @CloseMenu.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
-                @CloseMenu.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
-                @CloseMenu.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
-                @Click.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnClick;
-                @Click.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnClick;
-                @Click.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnClick;
-            }
-            m_Wrapper.m_CameraActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
-                @CursorPosition.started += instance.OnCursorPosition;
-                @CursorPosition.performed += instance.OnCursorPosition;
-                @CursorPosition.canceled += instance.OnCursorPosition;
-                @Scroll.started += instance.OnScroll;
-                @Scroll.performed += instance.OnScroll;
-                @Scroll.canceled += instance.OnScroll;
-                @CloseMenu.started += instance.OnCloseMenu;
-                @CloseMenu.performed += instance.OnCloseMenu;
-                @CloseMenu.canceled += instance.OnCloseMenu;
-                @Click.started += instance.OnClick;
-                @Click.performed += instance.OnClick;
-                @Click.canceled += instance.OnClick;
+                if (m_Wrapper.m_CameraActionsCallbackInterface != null)
+                {
+                    @Move.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnMove;
+                    @Move.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnMove;
+                    @Move.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnMove;
+                    @CursorPosition.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnCursorPosition;
+                    @CursorPosition.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnCursorPosition;
+                    @CursorPosition.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnCursorPosition;
+                    @Scroll.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnScroll;
+                    @Scroll.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnScroll;
+                    @Scroll.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnScroll;
+                    @CloseMenu.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
+                    @CloseMenu.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
+                    @CloseMenu.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnCloseMenu;
+                    @Click.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnClick;
+                    @Click.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnClick;
+                    @Click.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnClick;
+                }
+                m_Wrapper.m_CameraActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    @Move.started += instance.OnMove;
+                    @Move.performed += instance.OnMove;
+                    @Move.canceled += instance.OnMove;
+                    @CursorPosition.started += instance.OnCursorPosition;
+                    @CursorPosition.performed += instance.OnCursorPosition;
+                    @CursorPosition.canceled += instance.OnCursorPosition;
+                    @Scroll.started += instance.OnScroll;
+                    @Scroll.performed += instance.OnScroll;
+                    @Scroll.canceled += instance.OnScroll;
+                    @CloseMenu.started += instance.OnCloseMenu;
+                    @CloseMenu.performed += instance.OnCloseMenu;
+                    @CloseMenu.canceled += instance.OnCloseMenu;
+                    @Click.started += instance.OnClick;
+                    @Click.performed += instance.OnClick;
+                    @Click.canceled += instance.OnClick;
+                }
             }
         }
-    }
-    public CameraActions @Camera => new CameraActions(this);
-    private int m_NewcontrolschemeSchemeIndex = -1;
-    public InputControlScheme NewcontrolschemeScheme
-    {
-        get
+        public CameraActions @Camera => new CameraActions(this);
+        private int m_NewcontrolschemeSchemeIndex = -1;
+        public InputControlScheme NewcontrolschemeScheme
         {
-            if (m_NewcontrolschemeSchemeIndex == -1) m_NewcontrolschemeSchemeIndex = asset.FindControlSchemeIndex("New control scheme");
-            return asset.controlSchemes[m_NewcontrolschemeSchemeIndex];
+            get
+            {
+                if (m_NewcontrolschemeSchemeIndex == -1) m_NewcontrolschemeSchemeIndex = asset.FindControlSchemeIndex("New control scheme");
+                return asset.controlSchemes[m_NewcontrolschemeSchemeIndex];
+            }
         }
-    }
-    public interface ICameraActions
-    {
-        void OnMove(InputAction.CallbackContext context);
-        void OnCursorPosition(InputAction.CallbackContext context);
-        void OnScroll(InputAction.CallbackContext context);
-        void OnCloseMenu(InputAction.CallbackContext context);
-        void OnClick(InputAction.CallbackContext context);
+        public interface ICameraActions
+        {
+            void OnMove(InputAction.CallbackContext context);
+            void OnCursorPosition(InputAction.CallbackContext context);
+            void OnScroll(InputAction.CallbackContext context);
+            void OnCloseMenu(InputAction.CallbackContext context);
+            void OnClick(InputAction.CallbackContext context);
+        }
     }
 }

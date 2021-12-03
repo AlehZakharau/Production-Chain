@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.CameraController
 {
     public sealed class MouseClicker : MonoBehaviour
     {

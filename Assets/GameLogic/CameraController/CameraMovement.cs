@@ -1,11 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.CameraController
 {
     public class CameraMovement : MonoBehaviour
     {
-        [SerializeField] private PlayerInputInstance playerInputI;
         private PlayerInput playerInput;
 
         [SerializeField] private float speedButtons = 2f;
@@ -19,7 +17,7 @@ namespace GameLogic
 
         private void Start()
         {
-            playerInput = playerInputI.PlayerInput;
+            playerInput = PlayerInputInstance.Instance.PlayerInput;
 
             width = Screen.width;
             height = Screen.height;

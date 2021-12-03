@@ -1,8 +1,6 @@
-﻿using System;
-using System.ComponentModel.Design.Serialization;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace GameLogic
+namespace GameLogic.CameraController
 {
     public class PlayerInputInstance : MonoBehaviour
     {
@@ -10,10 +8,10 @@ namespace GameLogic
         public PlayerInput PlayerInput { get; private set; }
         private void Awake()
         {
-            Instance = this;
             PlayerInput = new PlayerInput();
-            
             PlayerInput.Enable();
+            
+            Instance = this;
         }
     }
 }
