@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameLogic.Data;
+using CommonBaseUI.Data;
 using GameLogic.Manufacture;
 using GameLogic.Transport;
 using UnityEngine;
@@ -11,17 +11,24 @@ namespace GameLogic
     {
         [SerializeField] private ManufactureViewFactory viewFactory;
         [SerializeField] private TransportViewFactory transportViewFactory;
-        [SerializeField] private DataManagerView dataManagerView;
         
         [SerializeField] private ManufactureInitData[] specData;
         [SerializeField] private Tick tick;
 
         private List<IManufactureModel> manufactures;
 
-        private void Awake()
+        private void Start()
         {
             manufactures = new List<IManufactureModel>(specData.Length);
             var transportationService = new TransportationService(transportViewFactory, tick);
+            
+            CreateManufacture(transportationService);
+            
+            DataManager.Instance.CreateManufactureDataManager(manufactures);
+        }
+
+        private void CreateManufacture(TransportationService transportationService)
+        {
             foreach (var t in specData)
             {
                 if (t == null) throw new NullReferenceException();
@@ -37,9 +44,6 @@ namespace GameLogic
                 var controllerFactory = new ManufactureControllerFactory(model, view);
                 var controller = controllerFactory.Controller;
             }
-
-            var dataManagerModel = new DataManagerModel(manufactures);
-            var dataManagerController = new DataManagerController(dataManagerModel, dataManagerView);
         }
     }
 }
