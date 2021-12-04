@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameLogic.Data;
 using GameLogic.Manufacture;
 using UnityEngine;
 
@@ -10,35 +9,32 @@ namespace CommonBaseUI.Data
     {
         [SerializeField] private SaveLoadJsonWindows saveLoadJsonWindows;
         [SerializeField] private SaveLoadJsonWeb saveLoadJsonWeb;
-        [SerializeField] private SaveLoadAsyncTest saveLoadAsyncTest;
+        //[SerializeField] private SaveLoadAsyncTest saveLoadAsyncTest;
 
         public static DataManager Instance;
         
         private SaveLoadJson saveLoadJson;
-        private GameSettingsDataManager gameSettingDataManager;
         private ManufactureDataManager manufactureDataManager;
+
+        public GameSettingsDataManager GameSettingsDataManager { get; private set; }
 
 
         private void Awake()
-        {
-            Instance = this;
-        }
-
-        private void Start()
         {
             #if UNITY_WEBGL
                 saveLoadJson = saveLoadJsonWeb;
             #else
                 saveLoadJson = saveLoadJsonWindows;
             #endif
-
-            gameSettingDataManager = new GameSettingsDataManager(saveLoadJson);
+            
+            GameSettingsDataManager = new GameSettingsDataManager(saveLoadJson);
+            Instance = this;
         }
 
-        public void CreateManufactureDataManager(List<IManufactureModel> manufactures)
-        {
-            manufactureDataManager = new ManufactureDataManager(saveLoadJson, manufactures);
-        }
+        // public void CreateManufactureDataManager(List<IManufactureModel> manufactures)
+        // {
+        //     manufactureDataManager = new ManufactureDataManager(saveLoadJson, manufactures);
+        // }
         
         public void Save()
         {
