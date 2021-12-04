@@ -11,10 +11,12 @@ namespace CommonBaseUI.Settings
         [SerializeField] private Slider sliderSound;
         [SerializeField] private Slider sliderMusic;
         //[SerializeField] private Slider sliderVoice;
-        [SerializeField] private GameSettingsDataManager gameSettingsDataManager;
+
+        private GameSettingsDataManager gameSettingsDataManager;
         
         private void Start()
         {
+            gameSettingsDataManager = DataManager.Instance.GameSettingsDataManager;
             sliderSound.value = gameSettingsDataManager.SoundVolume;
             sliderMusic.value = gameSettingsDataManager.MusicVolume;
             //sliderVoice.value = data.VoiceVolume;

@@ -18,11 +18,11 @@ namespace CommonBaseUI.Settings
     {
         [SerializeField] private Toggle fullScreen;
         [SerializeField] private TMP_Dropdown resolution;
-
-        [SerializeField] private GameSettingsDataManager gameSettingsDataManager;
-
+        
+        private GameSettingsDataManager gameSettingsDataManager;
         private void Start()
         {
+            gameSettingsDataManager = DataManager.Instance.GameSettingsDataManager;
             resolution.value = (int)gameSettingsDataManager.Resolution;
         }
 
