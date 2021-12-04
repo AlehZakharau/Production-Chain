@@ -1,6 +1,5 @@
 ﻿using CommonBaseUI.Localization.LocalizationAsset;
 using CommonBaseUI.Settings;
-using UnityEngine;
 
 namespace CommonBaseUI.Data
 {
@@ -10,7 +9,7 @@ namespace CommonBaseUI.Data
         {
             this.saveLoadJson = saveLoadJson;
         }
-        
+
         private readonly GameSettingsData gameSettingsData = new GameSettingsData();
         private readonly SaveLoadJson saveLoadJson;
 
@@ -37,7 +36,7 @@ namespace CommonBaseUI.Data
                 saveLoadJson.SaveToJson(Filename, gameSettingsData);
             }
         }
-        
+
         public float VoiceVolume
         {
             get => gameSettingsData.voiceVolume;
@@ -57,6 +56,7 @@ namespace CommonBaseUI.Data
                 saveLoadJson.SaveToJson(Filename, gameSettingsData);
             }
         }
+
         public int ResWidth
         {
             get => gameSettingsData.resWidth;
@@ -66,6 +66,7 @@ namespace CommonBaseUI.Data
                 saveLoadJson.SaveToJson(Filename, gameSettingsData);
             }
         }
+
         public int ResHeight
         {
             get => gameSettingsData.resHeight;
@@ -75,6 +76,7 @@ namespace CommonBaseUI.Data
                 saveLoadJson.SaveToJson(Filename, gameSettingsData);
             }
         }
+
         public ScreenResolutions16and9 Resolution
         {
             get => gameSettingsData.resolution;
@@ -97,7 +99,5 @@ namespace CommonBaseUI.Data
 
         #endregion
 
-
-        
     }
 }
