@@ -8,20 +8,19 @@ namespace CommonBaseUI.UIController
     public class UIKeywordInputView : MonoBehaviour
     {
         public event Action OnCloseButtonPressed;
-        
-        [SerializeField] private PlayerInputInstance playerInputI;
 
         private PlayerInput playerInput;
 
         private void Start()
         {
-            playerInput = playerInputI.PlayerInput;
+            playerInput = PlayerInputInstance.Instance.PlayerInput;
         }
 
         private void Update()
         {
             var buttonPressed = playerInput.Camera.CloseMenu.triggered;
         
+            Debug.Log($"Esc: {buttonPressed}");
             if(buttonPressed)
             {
                 OnCloseButtonPressed?.Invoke();
