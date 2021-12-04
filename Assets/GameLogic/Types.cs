@@ -1,6 +1,6 @@
 ﻿namespace GameLogic
 {
-    public enum ManufactureType
+    public enum BuildingsType
     {
         Extractor,
         Refinery,
