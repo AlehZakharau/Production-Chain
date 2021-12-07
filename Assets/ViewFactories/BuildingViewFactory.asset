@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eba29624eadd437980c526447b93ec18, type: 3}
-  m_Name: TransportViewFactory
+  m_Script: {fileID: 11500000, guid: f569622af3934ca6a15d975b512f353b, type: 3}
+  m_Name: BuildingViewFactory
   m_EditorClassIdentifier: 
-  transportView: {fileID: 0}
+  productionView: {fileID: 4741640041208459387, guid: 6f8a69b99b55c044ca10401d64fa7835, type: 3}

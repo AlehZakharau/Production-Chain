@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eba29624eadd437980c526447b93ec18, type: 3}
-  m_Name: TransportViewFactory
+  m_Script: {fileID: 11500000, guid: ae18ab2a21474243992a07da87e8334d, type: 3}
+  m_Name: RefineryProduceStorageView
   m_EditorClassIdentifier: 
-  transportView: {fileID: 0}
+  refineryProduceStorageView: {fileID: 6760217714292040584, guid: 3860cfd12bdc33e44b7eb802c9c79b92, type: 3}
