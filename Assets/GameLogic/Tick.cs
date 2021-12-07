@@ -6,7 +6,7 @@ namespace GameLogic
 {
     public class Tick : MonoBehaviour
     {
-        public readonly List<ITickable> Tickable = new List<ITickable>();
+        public static readonly List<ITickable> Tickable = new List<ITickable>();
 
         private void Update()
         {

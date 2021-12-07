@@ -75,7 +75,7 @@ namespace GameLogic.Transport
 
         public void OnDestroyBridge(ITransportModel transportModel)
         {
-            tick.Tickable.Remove(transports[transportModel]);
+            Tick.Tickable.Remove(transports[transportModel]);
             transports.Remove(transportModel);
         }
 
