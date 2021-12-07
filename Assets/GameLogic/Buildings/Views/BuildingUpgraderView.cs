@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameLogic.Manufacture
 {
@@ -9,7 +10,7 @@ namespace GameLogic.Manufacture
     }
     
     
-    public class BuildingUpgraderView : IBuildingUpgraderView
+    public class BuildingUpgraderView : MonoBehaviour, IBuildingUpgraderView
     {
         public int Level { get; set; }
         public Dictionary<ResourceType, int> UpgradeResources { get; set; }

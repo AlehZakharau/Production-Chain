@@ -7,8 +7,6 @@ namespace GameLogic.Manufacture
         [SerializeField] private BuildingViewFactory buildingViewFactory;
         [SerializeField] private RefineryProduceStorageViewFactory refineryProduceStorageViewFactory;
         [SerializeField] private ResourceStorageViewFactory resourceStorageViewFactory;
-        
-        [SerializeField] private Tick tick;
 
         public void CreateBuilding(BuildingInitData initData)
         {
@@ -20,7 +18,7 @@ namespace GameLogic.Manufacture
                     var extractorResourceStorageModel = new ResourceStorageModel(buildingUpgraderModel);
                     var extractorBuildingModel = new ManufactureModel(extractorResourceStorageModel, buildingUpgraderModel,
                         initData.InitData, initData.ManufactureInitData);
-                    tick.Tickable.Add(extractorBuildingModel);
+                    Tick.Tickable.Add(extractorBuildingModel);
                     
                     buildingViewFactory.Initiate(parent);
                     var extractorBuildingView = buildingViewFactory.BuildingView;
@@ -40,7 +38,7 @@ namespace GameLogic.Manufacture
                             refineryProduceStorageModel);
                     var refineryBuildingModel = new ManufactureModel(refineryResourceStorageModel, buildingUpgraderModel,
                         initData.InitData, initData.ManufactureInitData);
-                    tick.Tickable.Add(refineryBuildingModel);
+                    Tick.Tickable.Add(refineryBuildingModel);
                     
                     buildingViewFactory.Initiate(parent);
                     var refineryBuildingView = buildingViewFactory.BuildingView;

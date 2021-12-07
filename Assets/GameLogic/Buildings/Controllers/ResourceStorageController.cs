@@ -14,6 +14,14 @@
         {
             this.resourceStorageModel = resourceStorageModel;
             this.resourceStorageView = resourceStorageView;
+            
+            
+            resourceStorageModel.OnProducingResource += OnProducingResource;
+        }
+
+        private void OnProducingResource()
+        {
+            resourceStorageView.ResourceAmount = resourceStorageModel.ResourceAmount;
         }
     }
 }

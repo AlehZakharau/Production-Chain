@@ -15,6 +15,15 @@
         {
             this.refineryProduceStorageModel = refineryProduceStorageModel;
             this.refineryProduceStorageView = refineryProduceStorageView;
+
+
+            Init();
+        }
+
+        private void Init()
+        {
+            refineryProduceStorageView.ProduceResources = 
+                refineryProduceStorageModel.ProduceResources;
         }
     }
 }

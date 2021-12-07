@@ -17,7 +17,7 @@ namespace CommonBaseUI.Data
         private ManufactureDataManager manufactureDataManager;
 
         public GameSettingsDataManager GameSettingsDataManager { get; private set; }
-
+        public BuildingsData buildingsData;
 
         private void Awake()
         {
@@ -28,6 +28,7 @@ namespace CommonBaseUI.Data
             #endif
             
             GameSettingsDataManager = new GameSettingsDataManager(saveLoadJson);
+            buildingsData = new BuildingsData();
             Instance = this;
         }
 
@@ -38,11 +39,13 @@ namespace CommonBaseUI.Data
         
         public void Save()
         {
+            saveLoadJson.SaveToJson("BuildingData", buildingsData);
             manufactureDataManager.SaveData();
         }
 
         public void Load()
         {
+            saveLoadJson.LoadFromJson("BuildingData", buildingsData);
             manufactureDataManager.LoadData();
         }
     }

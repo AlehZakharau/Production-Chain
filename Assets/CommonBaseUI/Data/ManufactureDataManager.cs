@@ -19,7 +19,7 @@ namespace CommonBaseUI.Data
         //     }
         // }
 
-        private readonly ManufacturesDates data;
+        private readonly BuildingsData data;
         private readonly SaveLoadJson saveLoadJson;
 
         private const string Filename = "ManufactureData";

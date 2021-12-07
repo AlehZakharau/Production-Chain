@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CommonBaseUI.Data;
 
 namespace GameLogic.Manufacture
 {
@@ -15,6 +16,7 @@ namespace GameLogic.Manufacture
     {
         private readonly List<ResourceType> demandProductionResources;
         private readonly Dictionary<ResourceType, int> productionResources;
+        private readonly RefineryData refineryData;
 
         public Dictionary<ResourceType, int> ProduceResources => productionResources;
 
@@ -27,6 +29,9 @@ namespace GameLogic.Manufacture
             {
                 productionResources.Add(resource, 0);
             }
+
+            refineryData = new RefineryData();
+            DataManager.Instance.buildingsData.RefineryData.Add(refineryData);
         }
 
         public bool AddResource(ResourceType resourceType)
@@ -34,6 +39,7 @@ namespace GameLogic.Manufacture
             if (demandProductionResources.Contains(resourceType))
             {
                 productionResources[resourceType]++;
+                refineryData.demandResources = productionResources.Values.ToArray();
                 return true;
             }
             return false;
@@ -49,6 +55,7 @@ namespace GameLogic.Manufacture
             foreach (var varResource in demandProductionResources)
             {
                 productionResources[varResource]--;
+                refineryData.demandResources = productionResources.Values.ToArray();
             }
             return true;
         }

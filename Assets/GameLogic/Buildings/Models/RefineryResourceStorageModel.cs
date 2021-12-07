@@ -1,16 +1,17 @@
 ﻿using System;
+using CommonBaseUI.Data;
 
 namespace GameLogic.Manufacture
 {
     public class RefineryResourceStorageModel : IResourceStorageModel
     {
-        public event Action OnUpgrade;
-
         private int resourceAmount;
 
         private readonly IBuildingUpgraderModel buildingUpgraderModel;
         private readonly IRefineryProduceStorageModel refineryProduceStorageModel;
+        private readonly ResourceStorageData resourceStorageData;
 
+        public event Action OnProducingResource;
         public int ResourceAmount => resourceAmount < 1 ? 0 : resourceAmount;
 
         public RefineryResourceStorageModel(IBuildingUpgraderModel buildingUpgraderModel,
@@ -18,7 +19,9 @@ namespace GameLogic.Manufacture
         {
             this.buildingUpgraderModel = buildingUpgraderModel;
             this.refineryProduceStorageModel = refineryProduceStorageModel;
-            buildingUpgraderModel.OnUpgrade += () => OnUpgrade?.Invoke();
+            
+            resourceStorageData = new ResourceStorageData();
+            DataManager.Instance.buildingsData.ResourceStorageData.Add(resourceStorageData);
         }
 
         public bool AddDemandResources(ResourceType resource)
@@ -39,6 +42,8 @@ namespace GameLogic.Manufacture
             if (refineryProduceStorageModel.SpendResourceForCreateResource()) ;
             {
                 resourceAmount++;
+                resourceStorageData.resourceAmount = resourceAmount;
+                OnProducingResource?.Invoke();
                 return true;
             }
         }
