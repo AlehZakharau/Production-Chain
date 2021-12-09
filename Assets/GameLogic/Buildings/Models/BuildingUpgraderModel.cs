@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommonBaseUI.Data;
 
 namespace GameLogic.Manufacture
 {
@@ -37,11 +38,17 @@ namespace GameLogic.Manufacture
         private readonly InitializeData.LevelInitData[] levelsData;
         private List<ResourceType> demandUpgradeResources;
         private Dictionary<ResourceType, int> upgradeResources;
+        private readonly UpgradeData upgradeData;
 
         public BuildingUpgraderModel(InitializeData.LevelInitData[] levelsData)
         {
             this.levelsData = levelsData;
             upgradeProductionSpeedCoefficient = levelsData[level].upgradeProductionSpeedCoefficient;
+
+            upgradeData = new UpgradeData();
+            DataManager.Instance.buildingsData.UpgradeData.Add(upgradeData);
+            DataManager.Instance.GetDataOnSave += SaveData;
+            DataManager.Instance.SendDataOnLoad += LoadData;
         }
 
         public bool AddResource(ResourceType resource)
@@ -50,7 +57,7 @@ namespace GameLogic.Manufacture
             CheckUpgradeOpportunity();
             return false;
         }
-        
+
         private void CheckUpgradeOpportunity()
         {
             if(upgradeResources.All(resource => resource.Value < 1))
@@ -60,7 +67,7 @@ namespace GameLogic.Manufacture
                 UpgradeDataToNewLevel(level);
             }
         }
-        
+
         private void UpgradeDataToNewLevel(int level)
         {
             if(level >= levelsData.Length - 1) return;
@@ -73,15 +80,20 @@ namespace GameLogic.Manufacture
                 upgradeResources.Add(demandUpgradeResources[i], currentLevelInit.demandUpgradeResourceCapacity[i]);
             }
         }
-        
-        private void SetUpgradeResourceAmount(int[] values)
+
+        private void SaveData()
         {
-            // if (values.Length != productionResources.Count)
-            //     throw new Exception();
+            upgradeData.level = level;
+            upgradeData.upgradeResources = upgradeResources.Values.ToArray();
+        }
+
+        private void LoadData()
+        {
+            Level = upgradeData.level;
             var index = 0;
-            foreach (var resource in upgradeResources.Keys.ToList())
+            foreach (var resource in upgradeResources.Keys)
             {
-                upgradeResources[resource] = values[index++];
+                upgradeResources[resource] = upgradeData.upgradeResources[index++];
             }
         }
     }

@@ -32,6 +32,8 @@ namespace GameLogic.Manufacture
 
             refineryData = new RefineryData();
             DataManager.Instance.buildingsData.RefineryData.Add(refineryData);
+            DataManager.Instance.GetDataOnSave += SaveData;
+            DataManager.Instance.SendDataOnLoad += LoadData;
         }
 
         public bool AddResource(ResourceType resourceType)
@@ -39,7 +41,6 @@ namespace GameLogic.Manufacture
             if (demandProductionResources.Contains(resourceType))
             {
                 productionResources[resourceType]++;
-                refineryData.demandResources = productionResources.Values.ToArray();
                 return true;
             }
             return false;
@@ -55,9 +56,22 @@ namespace GameLogic.Manufacture
             foreach (var varResource in demandProductionResources)
             {
                 productionResources[varResource]--;
-                refineryData.demandResources = productionResources.Values.ToArray();
             }
             return true;
+        }
+
+        private void SaveData()
+        {
+            refineryData.demandResources = productionResources.Values.ToArray();
+        }
+
+        private void LoadData()
+        {
+            var index = 0;
+            foreach (var resource in productionResources.Keys)
+            {
+                productionResources[resource] = refineryData.demandResources[index++];
+            }
         }
     }
 }

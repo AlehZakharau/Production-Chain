@@ -12,6 +12,9 @@ namespace CommonBaseUI.Data
         //[SerializeField] private SaveLoadAsyncTest saveLoadAsyncTest;
 
         public static DataManager Instance;
+
+        public event Action GetDataOnSave;
+        public event Action SendDataOnLoad;
         
         private SaveLoadJson saveLoadJson;
         private ManufactureDataManager manufactureDataManager;
@@ -40,13 +43,17 @@ namespace CommonBaseUI.Data
         public void Save()
         {
             saveLoadJson.SaveToJson("BuildingData", buildingsData);
+            
+            GetDataOnSave?.Invoke();
             manufactureDataManager.SaveData();
         }
 
         public void Load()
         {
             saveLoadJson.LoadFromJson("BuildingData", buildingsData);
+            
             manufactureDataManager.LoadData();
+            SendDataOnLoad?.Invoke();
         }
     }
 }

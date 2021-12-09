@@ -19,6 +19,8 @@ namespace GameLogic.Manufacture
 
             resourceStorageData = new ResourceStorageData();
             DataManager.Instance.buildingsData.ResourceStorageData.Add(resourceStorageData);
+            DataManager.Instance.GetDataOnSave += SaveData;
+            DataManager.Instance.SendDataOnLoad += LoadData;
         }
 
         public bool AddDemandResources(ResourceType resource)
@@ -29,12 +31,22 @@ namespace GameLogic.Manufacture
             }
             return false;
         }
+
         public bool ProduceResource()
         {
             resourceAmount++;
-            resourceStorageData.resourceAmount = resourceAmount;
             OnProducingResource?.Invoke();
             return true;
+        }
+
+        private void SaveData()
+        {
+            resourceStorageData.resourceAmount = resourceAmount;
+        }
+
+        private void LoadData()
+        {
+            resourceAmount = resourceStorageData.resourceAmount;
         }
     }
 }
