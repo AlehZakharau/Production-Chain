@@ -8,9 +8,9 @@ namespace CommonBaseUI.Data
     public class BuildingsData : ISerializable
     {
         public ManufactureData[] Manufactures;
-        public List<ResourceStorageData> ResourceStorageData;
-        public List<UpgradeData> UpgradeData;
-        public List<RefineryData> RefineryData;
+        public List<ResourceStorageData> ResourceStorageData =new List<ResourceStorageData>();
+        public List<UpgradeData> UpgradeData = new List<UpgradeData>();
+        public List<RefineryData> RefineryData = new List<RefineryData>();
 
         // public ManufacturesDates(int length)
         // {
