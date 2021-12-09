@@ -14,9 +14,8 @@ namespace GameLogic.Manufacture
 
         public void Initiate(Transform parent)
         {
-            var instance = Instantiate(refineryProduceStorageView, parent, true);
+            var instance = Instantiate(refineryProduceStorageView, parent);
             RefineryProduceStorageView = instance.GetComponent<IRefineryProduceStorageView>();
-            instance.transform.position = new Vector3(0, 0, 0);
         }
     }
 }

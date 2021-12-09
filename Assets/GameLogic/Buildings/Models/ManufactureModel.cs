@@ -25,8 +25,9 @@ namespace GameLogic.Manufacture
             this.buildingUpgraderModel = buildingUpgraderModel;
             
             BuildingsType = initData.buildingsType;
-            
             producingSpeed = manufactureInitData.productionSpeed;
+
+            Position = initData.Position.position;
         }
         
         public void Tick()

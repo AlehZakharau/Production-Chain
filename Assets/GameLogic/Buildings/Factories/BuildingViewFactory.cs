@@ -14,17 +14,16 @@ namespace GameLogic.Manufacture
         menuName = "SO/BuildingViewFactory", order = 0)]
     public class BuildingViewFactory : ScriptableObject, IBuildingViewFactory
     {
-        [SerializeField]private BuildingView productionView;
+        [SerializeField]private BuildingView buildingView;
         
         public IBuildingView BuildingView { get; private set; }
         public IBuildingUpgraderView BuildingUpgraderView { get; private set; }
 
         public void Initiate(Transform parent)
         {
-            var instance = Instantiate(productionView, parent, true);
+            var instance = Instantiate(buildingView, parent);
             BuildingView = instance.GetComponent<IBuildingView>();
             BuildingUpgraderView = instance.GetComponent<IBuildingUpgraderView>();
-            instance.transform.position = new Vector3(0, 0, 0);
         }
     }
 }

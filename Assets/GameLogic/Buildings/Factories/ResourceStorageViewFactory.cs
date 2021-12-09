@@ -15,9 +15,8 @@ namespace GameLogic.Manufacture
 
         public void Initiate(Transform parent)
         {
-            var instance = Instantiate(resourceStorageView, parent, true);
+            var instance = Instantiate(resourceStorageView, parent);
             ResourceStorageView = instance.GetComponent<IResourceStorageView>();
-            instance.transform.position = new Vector3(0, 0, 0);
         }
     }
 }
