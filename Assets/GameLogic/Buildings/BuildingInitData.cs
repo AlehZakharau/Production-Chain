@@ -6,6 +6,7 @@ namespace GameLogic.Manufacture
 {
     public class BuildingInitData : MonoBehaviour
     {
+        public BuildingsType buildingsType;
         [SerializeField] private InitializeData.InitData initData;
 
         [SerializeField] private InitializeData.ManufactureInitData manufactureInitData;
@@ -20,8 +21,16 @@ namespace GameLogic.Manufacture
         //public ManufactureData ManufactureData => new ManufactureData(initData, levelsInitData);
 
 #if UNITY_EDITOR
+        
+        private void InitializeForEditor () {
+            if (initData.buildingsType == BuildingsType.Refinery)
+            {
+                this.gameObject.AddComponent<WorldCreator>();
+            }
+        }
         private void Awake()
         {
+            
             CheckInitData();
         }
         private void CheckInitData()

@@ -401,8 +401,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83039df7b1be4609a467e59e543dc940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingsType: 0
   initData:
-    buildingsType: 0
+    buildingsType: 1
     Position: {fileID: 1493699543}
   manufactureInitData:
     resourceType: 1
@@ -460,6 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83039df7b1be4609a467e59e543dc940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingsType: 0
   initData:
     buildingsType: 0
     Position: {fileID: 1676475322}
