@@ -14,8 +14,7 @@ namespace GameLogic.Manufacture
     {
         [SerializeField] private GameObject hidPanel;
         //[SerializeField] private TMP_Text buildingTypeText;
-        public BuildingsType BuildingsType { get => BuildingsType;
-            set => BuildingsType = value; }
+        public BuildingsType BuildingsType { get; set; }
 
         public Vector3 Position { get => Position; 
             set => transform.position = value; }

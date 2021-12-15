@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9e916268d44d8abce3497c8f69da59, type: 3}
   m_Name: ResourceStorageViewFactory
   m_EditorClassIdentifier: 
-  resourceStorageView: {fileID: 5681430159899231964, guid: 54dc91d026af3784c8442a973aad46ab, type: 3}
+  resourceStorageView: {fileID: 3737947620407954061, guid: 9811ef49dfda12340ba39979eef8ca97, type: 3}
