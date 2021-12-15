@@ -2,9 +2,10 @@
 
 namespace GameLogic.CameraController
 {
+    [RequireComponent(typeof(Camera))]
     public sealed class MouseClicker : MonoBehaviour
     {
-        [SerializeField] private Camera camera;
+        private Camera camera;
         private PlayerInput playerInput;
         private IClickable currentObject;
 
@@ -12,6 +13,7 @@ namespace GameLogic.CameraController
 
         private void Start()
         {
+            camera = GetComponent<Camera>();
             playerInput = PlayerInputInstance.Instance.PlayerInput;
             clicableMask = LayerMask.GetMask("Manufacture");
         }

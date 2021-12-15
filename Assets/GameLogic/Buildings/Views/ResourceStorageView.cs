@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 namespace GameLogic.Manufacture
 {
@@ -8,6 +9,8 @@ namespace GameLogic.Manufacture
     }
     public class ResourceStorageView : MonoBehaviour, IResourceStorageView
     {
-        public int ResourceAmount { get; set; }
+        [SerializeField] private TMP_Text resourceAmountText;
+        public int ResourceAmount { get => ResourceAmount; set =>
+            resourceAmountText.text = value.ToString(); }
     }
 }

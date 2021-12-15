@@ -15,7 +15,7 @@ namespace GameLogic.Manufacture
     public class BuildingUpgraderView : MonoBehaviour, IBuildingUpgraderView
     {
         [SerializeField] private TMP_Text levelText;
-        [SerializeField] private TMP_Text upgradeResourceText;
+        // [SerializeField] private TMP_Text upgradeResourceText;
         public int Level { get => Level; set => levelText.text = value.ToString(); }
         public Dictionary<ResourceType, int> UpgradeResources { get; set; }
 
@@ -32,11 +32,11 @@ namespace GameLogic.Manufacture
 
         private void CreateListUpgradeResources(Dictionary<ResourceType, int> resources)
         {
-            upgradeResourceText.text = "";
-            foreach (var resource in resources)
-            {
-                upgradeResourceText.text += resource.Key.ToString() + " " + resource.Value.ToString() + "\n";
-            }
+            // upgradeResourceText.text = "";
+            // foreach (var resource in resources)
+            // {
+            //     upgradeResourceText.text += resource.Key.ToString() + " " + resource.Value.ToString() + "\n";
+            // }
         }
     }
 }
