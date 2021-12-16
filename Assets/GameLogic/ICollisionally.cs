@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace GameLogic
 {
-    
     public interface ICollisionally
     {
         public void Execute();

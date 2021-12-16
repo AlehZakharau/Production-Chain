@@ -24,8 +24,8 @@ namespace GameLogic.Manufacture
         {
             var testDictionary = new Dictionary<ResourceType, int>()
             {
-                { ResourceType.BlueResource, 1 },
-                { ResourceType.GreenResource, 2 }, { ResourceType.OrangeResource, 25 }
+                { ResourceType.Wood, 1 },
+                { ResourceType.Stone, 2 }
             };
             CreateListUpgradeResources(testDictionary);
         }

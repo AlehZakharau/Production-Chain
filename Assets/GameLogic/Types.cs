@@ -10,9 +10,7 @@
     
     public enum ResourceType
     {
-        BlueResource,
-        OrangeResource,
-        GreenResource,
-        VioletResource
+        Wood,
+        Stone
     }
 }

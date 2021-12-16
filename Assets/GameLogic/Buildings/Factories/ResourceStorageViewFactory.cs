@@ -6,7 +6,8 @@ namespace GameLogic.Manufacture
     {
         IResourceStorageView ResourceStorageView { get; }
     }
-    [CreateAssetMenu(fileName = "ResourceStorageViewFactory", menuName = "SO/ResourceStorageViewFactory", order = 0)]
+    [CreateAssetMenu(fileName = "ResourceStorageViewFactory", 
+        menuName = "Factories/ResourceStorageViewFactory", order = 0)]
     public class ResourceStorageViewFactory : ScriptableObject, IResourceStorageViewFactory
     {
         [SerializeField] private ResourceStorageView resourceStorageView;

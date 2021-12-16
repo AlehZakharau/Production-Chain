@@ -6,7 +6,8 @@ namespace GameLogic.Manufacture
     {
         public IRefineryProduceStorageView RefineryProduceStorageView { get; }
     }
-    [CreateAssetMenu(fileName = "RefineryProduceStorageView", menuName = "SO/RefineryProduceStorageView", order = 0)]
+    [CreateAssetMenu(fileName = "RefineryProduceStorageView", 
+        menuName = "Factories/RefineryProduceStorageView", order = 0)]
     public class RefineryProduceStorageViewFactory : ScriptableObject, IRefineryProduceStorageViewFactory
     {
         [SerializeField] private RefineryProduceStorageView refineryProduceStorageView;

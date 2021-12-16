@@ -11,7 +11,7 @@ namespace GameLogic.Manufacture
     }
     
     [CreateAssetMenu(fileName = "BuildingViewFactory", 
-        menuName = "SO/BuildingViewFactory", order = 0)]
+        menuName = "Factories/BuildingViewFactory", order = 0)]
     public class BuildingViewFactory : ScriptableObject, IBuildingViewFactory
     {
         [SerializeField]private BuildingView buildingView;
