@@ -15,8 +15,25 @@ namespace GameLogic.Manufacture
     public class BuildingUpgraderView : MonoBehaviour, IBuildingUpgraderView
     {
         [SerializeField] private TMP_Text levelText;
+        [SerializeField] private GameObject tileDeActive;
+        [SerializeField] private GameObject tileActive;
         // [SerializeField] private TMP_Text upgradeResourceText;
-        public int Level { get => Level; set => levelText.text = value.ToString(); }
+        private int level;
+        public int Level
+        {
+            get => level;
+            set
+            {
+                level = value;
+                levelText.text = value.ToString();
+                if (level > 0)
+                {
+                    tileDeActive.SetActive(false);
+                    tileActive.SetActive(true);
+                }
+            }
+        }
+
         public Dictionary<ResourceType, int> UpgradeResources { get; set; }
 
 

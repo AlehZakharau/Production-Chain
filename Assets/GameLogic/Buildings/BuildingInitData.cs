@@ -75,6 +75,7 @@ namespace GameLogic.Manufacture
         {
             public BuildingsType buildingsType;
             public Transform Position;
+            public int startLevel;
         }
         [Serializable]
         public struct LevelInitData

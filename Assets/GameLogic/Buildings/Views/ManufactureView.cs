@@ -9,7 +9,20 @@ namespace GameLogic.Manufacture
     public class ManufactureView : MonoBehaviour, IManufactureView
     {
         [SerializeField] private ResourceIcons resourceIcons;
-        
-        public ResourceType ResourceType { get; set; }
+        [SerializeField] private SpriteRenderer resourceIconActive;
+        [SerializeField] private SpriteRenderer resourceIconDeActive;
+
+        private ResourceType resourceType;
+
+        public ResourceType ResourceType
+        {
+            get => resourceType;
+            set
+            {
+                resourceType = value;
+                resourceIconActive.sprite = resourceIcons.resourceIconsA[resourceType];
+                resourceIconDeActive.sprite = resourceIcons.resourceIconsDA[resourceType];
+            }
+        }
     }
 }

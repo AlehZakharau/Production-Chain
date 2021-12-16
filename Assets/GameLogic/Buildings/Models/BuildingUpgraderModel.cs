@@ -40,8 +40,9 @@ namespace GameLogic.Manufacture
         private Dictionary<ResourceType, int> upgradeResources;
         private readonly UpgradeData upgradeData;
 
-        public BuildingUpgraderModel(InitializeData.LevelInitData[] levelsData)
+        public BuildingUpgraderModel(InitializeData.LevelInitData[] levelsData, InitializeData.InitData initData)
         {
+            level = initData.startLevel;
             this.levelsData = levelsData;
             upgradeProductionSpeedCoefficient = levelsData[level].upgradeProductionSpeedCoefficient;
 

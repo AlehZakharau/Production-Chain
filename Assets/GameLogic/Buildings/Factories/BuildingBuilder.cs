@@ -12,7 +12,7 @@ namespace GameLogic.Manufacture
         public void CreateBuilding(BuildingInitData initData)
         {
             var parent = initData.transform;
-            var buildingUpgraderModel = new BuildingUpgraderModel(initData.LevelInitData);
+            var buildingUpgraderModel = new BuildingUpgraderModel(initData.LevelInitData, initData.InitData);
             var buildingModel = new BuildingModel(initData.InitData);
             switch (initData.InitData.buildingsType)
             {

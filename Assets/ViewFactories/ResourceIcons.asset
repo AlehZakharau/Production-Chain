@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e96dc2e34bf4d8ba0f48b67b7fe3e6d, type: 3}
   m_Name: ResourceIcons
   m_EditorClassIdentifier: 
-  resourceTypes: 
-  resourceIcons: []
+  resourceTypes: 0000000001000000
+  resourceIconsActive:
+  - {fileID: 21300000, guid: 23fd859a12f210848bdae472470fca43, type: 3}
+  - {fileID: 21300000, guid: c065a9ca3291f514c9ba89f68f2ec8e1, type: 3}
+  resourceIconsDeActive:
+  - {fileID: 21300000, guid: a80e1cf6356869a469ed6b40cbbccf9e, type: 3}
+  - {fileID: 21300000, guid: a4edaf762304e8b44998eb823df76cac, type: 3}
