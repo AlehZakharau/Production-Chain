@@ -4,32 +4,32 @@ using UnityEngine;
 
 namespace GameLogic.Manufacture
 {
-    internal class ManufactureModel : IBuildingModel, ITickable
+    public interface IManufactureModel
     {
-        public event Action OnProducingResource;
-
+        public ResourceType ResourceType { get; set; }
+    }
+    internal class ManufactureModel : IManufactureModel, ITickable
+    {
         private float timer;
 
         private readonly IResourceStorageModel resourceStorageModel;
         private readonly IBuildingUpgraderModel buildingUpgraderModel;
-        
-        public BuildingsType BuildingsType { get; set; }
-        public Vector3 Position { get; set; }
+
+        public ResourceType ResourceType { get; set; }
 
         private readonly float producingSpeed;
+
         public ManufactureModel(IResourceStorageModel resourceStorageModel,
-            IBuildingUpgraderModel buildingUpgraderModel, InitializeData.InitData initData, 
+            IBuildingUpgraderModel buildingUpgraderModel, 
             InitializeData.ManufactureInitData manufactureInitData)
         {
             this.resourceStorageModel = resourceStorageModel;
             this.buildingUpgraderModel = buildingUpgraderModel;
             
-            BuildingsType = initData.buildingsType;
             producingSpeed = manufactureInitData.productionSpeed;
-
-            Position = initData.Position.position;
+            ResourceType = manufactureInitData.resourceType;
         }
-        
+
         public void Tick()
         {
             timer += Time.deltaTime;
@@ -41,16 +41,27 @@ namespace GameLogic.Manufacture
         }
 
         // public void AddManufactureModel()
+
         // {
+
         //     var status = transportationService.AddManufactureModel(this);
+
         //     if (status)
+
         //     {
+
         //         OnConnectionSuccess?.Invoke();
+
         //     }
+
         //     else
+
         //     {
+
         //         OnConnectionFail?.Invoke();
+
         //     }
+
         // }
     }
 }
