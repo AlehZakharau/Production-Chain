@@ -6,6 +6,7 @@ namespace GameLogic.Manufacture
     public class BuildingBuilder : MonoBehaviour
     {
         [SerializeField] private BuildingViewFactory buildingViewFactory;
+        [SerializeField] private RefineryViewFactory refineryViewFactory;
         [SerializeField] private ExtractorViewFactory extractorViewFactory;
         [SerializeField] private ManufactureViewFactory manufactureViewFactory;
         [SerializeField] private RefineryProduceStorageViewFactory refineryProduceStorageViewFactory;
@@ -57,25 +58,20 @@ namespace GameLogic.Manufacture
                     Tick.Tickable.Add(refineryModel);
                     
                     //Views
-                    buildingViewFactory.Initiate(parent);
-                    var refineryBuildingView = buildingViewFactory.BuildingView;
-                    var refineryBuildingUpgradeView = buildingViewFactory.BuildingUpgraderView;
-                    resourceStorageViewFactory.Initiate(parent);
-                    var refineryResourceStorageView = resourceStorageViewFactory.ResourceStorageView;
-                    refineryProduceStorageViewFactory.Initiate(buildingViewFactory.BuildingClicable.parent);
-                    var refineryProduceStorageView = refineryProduceStorageViewFactory.RefineryProduceStorageView;
-                    manufactureViewFactory.Initiate(parent);
-                    var refineryView = manufactureViewFactory.ManufactureView;
+                    refineryViewFactory.Initiate(parent);
+                    var refineryBuildingClicable = refineryViewFactory.BuildingClicable;
+                    var refineryBuildingView = refineryViewFactory.BuildingView;
+                    var refineryBuildingUpgradeView = refineryViewFactory.BuildingUpgraderView;
+                    var refineryProduceStorageView = refineryViewFactory.RefineryProduceStorageView;
+                    var refineryView = refineryViewFactory.ManufactureView;
                     
                     //Controllers
                     var refineryBuildingController = new BuildingController(buildingUpgraderModel,
                         refineryBuildingUpgradeView,
                         buildingModel, refineryBuildingView);
-                    var refineryResourceStorage = new ResourceStorageController(refineryResourceStorageModel,
-                        refineryResourceStorageView, buildingViewFactory.BuildingClicable);
                     var refineryProduceStorageController = new RefineryProduceStorageController(
                         refineryProduceStorageModel,
-                        refineryProduceStorageView);
+                        refineryProduceStorageView, refineryBuildingClicable);
                     var refineryController = new ManufactureController(
                         refineryModel, refineryView, buildingViewFactory.BuildingClicable);
                     break;

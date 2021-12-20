@@ -3915,7 +3915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initData:
-    buildingsType: 1
+    buildingsType: 0
     Position: {fileID: 767719879}
     startLevel: 1
   manufactureInitData:
@@ -9296,6 +9296,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5042897425015471745, guid: ca25f27e6078cbb4f91c80adeb62ef3b, type: 3}
+      propertyPath: refineryViewFactory
+      value: 
+      objectReference: {fileID: 11400000, guid: 391024477bd32ad44b93bd61b6143cdb, type: 2}
+    - target: {fileID: 5042897425015471745, guid: ca25f27e6078cbb4f91c80adeb62ef3b, type: 3}
+      propertyPath: extractorViewFactory
+      value: 
+      objectReference: {fileID: 11400000, guid: 398f5143dfc24ae439f77f880971509d, type: 2}
+    - target: {fileID: 5042897425015471745, guid: ca25f27e6078cbb4f91c80adeb62ef3b, type: 3}
       propertyPath: manufactureViewFactory
       value: 
       objectReference: {fileID: 11400000, guid: 37ae49e0f23eb0d40b17f7d8e069ac2b, type: 2}
@@ -13131,6 +13139,10 @@ PrefabInstance:
     - target: {fileID: 635725350850187936, guid: 1bd55e41716549a46a5710c3dd17e459, type: 3}
       propertyPath: m_Name
       value: BuiildingTileActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990872805511585288, guid: 1bd55e41716549a46a5710c3dd17e459, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bd55e41716549a46a5710c3dd17e459, type: 3}

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073fa2851ee243569ed2345ff88fa026, type: 3}
-  m_Name: ExtractorViewFactory
+  m_Script: {fileID: 11500000, guid: 3a6ede81c5ae400d9f6cdf2d70a1098c, type: 3}
+  m_Name: RefineryViewFactory
   m_EditorClassIdentifier: 
-  buildingView: {fileID: 4261965161353071444, guid: 306867005cfc6fa48bc79ae34ce8b42c, type: 3}
+  buildingView: {fileID: 4261965161353071444, guid: c1493a5b8b16e0f479dab1bb2f00541f, type: 3}
