@@ -41,6 +41,8 @@ namespace GameLogic.Manufacture
 
         public void OnClick()
         {
+            if(BuildingModel.BuildingsType == BuildingsType.Extractor ||
+                BuildingModel.BuildingsType == BuildingsType.Refinery) return;
             transportationService.CallTransportService(this);
         }
 
