@@ -20,8 +20,8 @@ namespace GameLogic.Manufacture
             set
             {
                 resourceType = value;
-                resourceIconActive.sprite = resourceIcons.resourceIconsA[resourceType];
-                resourceIconDeActive.sprite = resourceIcons.resourceIconsDA[resourceType];
+                resourceIconActive.sprite = resourceIcons.resourceIconsA[value];
+                resourceIconDeActive.sprite = resourceIcons.resourceIconsDA[value];
             }
         }
     }

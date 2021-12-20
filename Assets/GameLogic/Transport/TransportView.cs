@@ -68,16 +68,16 @@ namespace GameLogic.Transport
 
         private void Update()
         {
-            // if (receiverPoint.IsMovable || senderPoint.IsMovable)
+            // // if (receiverPoint.IsMovable || senderPoint.IsMovable)
+            // // {
+            // //     SetConnection();
+            // // }
+            // if (Input.GetMouseButtonDown(1) && isSelected)
             // {
-            //     SetConnection();
+            //     OnDestroy?.Invoke();
+            //     //Delete Model, Controller and fabrics
+            //     // or GC destroy it by itself
             // }
-            if (Input.GetMouseButtonDown(1) && isSelected)
-            {
-                OnDestroy?.Invoke();
-                //Delete Model, Controller and fabrics
-                // or GC destroy it by itself
-            }
         }
 
         private void ShowSelected()

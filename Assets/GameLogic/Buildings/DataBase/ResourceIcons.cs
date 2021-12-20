@@ -14,7 +14,7 @@ namespace GameLogic.Manufacture
         public Dictionary<ResourceType, Sprite> resourceIconsA = new Dictionary<ResourceType, Sprite>();
         public Dictionary<ResourceType, Sprite> resourceIconsDA = new Dictionary<ResourceType, Sprite>();
 
-        private void Awake()
+        public void Init()
         {
             if (resourceTypes.Length != resourceIconsActive.Length ||
                 resourceTypes.Length != resourceIconsDeActive.Length)
@@ -25,6 +25,11 @@ namespace GameLogic.Manufacture
             {
                 resourceIconsA.Add(resourceTypes[i], resourceIconsActive[i]);
                 resourceIconsDA.Add(resourceTypes[i], resourceIconsDeActive[i]);
+            }
+
+            foreach (var data in resourceIconsA)
+            {
+                Debug.Log($" Dictionary Key: {data.Key} Value: {data.Value} ");
             }
         }
     }

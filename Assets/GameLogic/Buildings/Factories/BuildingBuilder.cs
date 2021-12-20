@@ -1,16 +1,20 @@
-﻿using UnityEngine;
+﻿using GameLogic.Transport;
+using UnityEngine;
 
 namespace GameLogic.Manufacture
 {
     public class BuildingBuilder : MonoBehaviour
     {
         [SerializeField] private BuildingViewFactory buildingViewFactory;
+        [SerializeField] private ExtractorViewFactory extractorViewFactory;
         [SerializeField] private ManufactureViewFactory manufactureViewFactory;
         [SerializeField] private RefineryProduceStorageViewFactory refineryProduceStorageViewFactory;
         [SerializeField] private ResourceStorageViewFactory resourceStorageViewFactory;
-
-        public void CreateBuilding(BuildingInitData initData)
+        
+        private TransportationService transportationService;
+        public void CreateBuilding(BuildingInitData initData, TransportationService transportationService)
         {
+            this.transportationService = transportationService;
             var parent = initData.transform;
             var buildingUpgraderModel = new BuildingUpgraderModel(initData.LevelInitData, initData.InitData);
             var buildingModel = new BuildingModel(initData.InitData);
@@ -18,35 +22,38 @@ namespace GameLogic.Manufacture
             {
                 case BuildingsType.Extractor:
                     //Models
-                    var extractorResourceStorageModel = new ResourceStorageModel(buildingUpgraderModel);
-                    var extractorModel = new ManufactureModel(extractorResourceStorageModel, 
-                        buildingUpgraderModel, initData.ManufactureInitData);
+                    var extractorResourceStorageModel = new ResourceStorageModel( 
+                        buildingModel, buildingUpgraderModel, transportationService);
+                    var extractorModel = new ManufactureModel(buildingModel, 
+                        extractorResourceStorageModel, buildingUpgraderModel, 
+                        initData.ManufactureInitData, transportationService);
                     Tick.Tickable.Add(extractorModel);
                     
                     //Views
-                    buildingViewFactory.Initiate(parent);
-                    var extractorBuildingView = buildingViewFactory.BuildingView;
-                    var extractorBuildingUpgradeView = buildingViewFactory.BuildingUpgraderView;
-                    resourceStorageViewFactory.Initiate(parent);
-                    var extractorResourceStorageView = resourceStorageViewFactory.ResourceStorageView;
-                    manufactureViewFactory.Initiate(parent);
-                    var extractorView = manufactureViewFactory.ManufactureView;
+                    extractorViewFactory.Initiate(parent);
+                    var extractorBuildingClicable = extractorViewFactory.BuildingClicable;
+                    var extractorBuildingView = extractorViewFactory.BuildingView;
+                    var extractorBuildingUpgradeView = extractorViewFactory.BuildingUpgraderView;
+                    var extractorResourceStorageView = extractorViewFactory.ResourceStorageView;
+                    var extractorView = extractorViewFactory.ManufactureView;
 
                     //Controllers
                     var extractorBuildingController = new BuildingController(buildingUpgraderModel,
                         extractorBuildingUpgradeView,
                         buildingModel, extractorBuildingView);
                     var extractorResourceStorage = new ResourceStorageController(extractorResourceStorageModel,
-                        extractorResourceStorageView);
-                    var extractorController = new ManufactureController(extractorModel, extractorView);
+                        extractorResourceStorageView, extractorBuildingClicable);
+                    var extractorController = new ManufactureController(
+                        extractorModel, extractorView, extractorBuildingClicable);
                     break;
                 case BuildingsType.Refinery:
                     //Models
                     var refineryProduceStorageModel = new RefineryProduceStorageModel(initData.RefineryInitData);
-                    var refineryResourceStorageModel = new RefineryResourceStorageModel(buildingUpgraderModel, 
-                            refineryProduceStorageModel);
-                    var refineryModel = new ManufactureModel(refineryResourceStorageModel, 
-                        buildingUpgraderModel, initData.ManufactureInitData);
+                    var refineryResourceStorageModel = new RefineryResourceStorageModel(buildingModel, 
+                        buildingUpgraderModel, refineryProduceStorageModel, transportationService);
+                    var refineryModel = new ManufactureModel(buildingModel,
+                        refineryResourceStorageModel, buildingUpgraderModel, 
+                        initData.ManufactureInitData, transportationService);
                     Tick.Tickable.Add(refineryModel);
                     
                     //Views
@@ -55,7 +62,7 @@ namespace GameLogic.Manufacture
                     var refineryBuildingUpgradeView = buildingViewFactory.BuildingUpgraderView;
                     resourceStorageViewFactory.Initiate(parent);
                     var refineryResourceStorageView = resourceStorageViewFactory.ResourceStorageView;
-                    refineryProduceStorageViewFactory.Initiate(parent);
+                    refineryProduceStorageViewFactory.Initiate(buildingViewFactory.BuildingClicable.parent);
                     var refineryProduceStorageView = refineryProduceStorageViewFactory.RefineryProduceStorageView;
                     manufactureViewFactory.Initiate(parent);
                     var refineryView = manufactureViewFactory.ManufactureView;
@@ -65,11 +72,12 @@ namespace GameLogic.Manufacture
                         refineryBuildingUpgradeView,
                         buildingModel, refineryBuildingView);
                     var refineryResourceStorage = new ResourceStorageController(refineryResourceStorageModel,
-                        refineryResourceStorageView);
+                        refineryResourceStorageView, buildingViewFactory.BuildingClicable);
                     var refineryProduceStorageController = new RefineryProduceStorageController(
                         refineryProduceStorageModel,
                         refineryProduceStorageView);
-                    var refineryController = new ManufactureController(refineryModel, refineryView);
+                    var refineryController = new ManufactureController(
+                        refineryModel, refineryView, buildingViewFactory.BuildingClicable);
                     break;
                 case BuildingsType.Tower:
                     //Models

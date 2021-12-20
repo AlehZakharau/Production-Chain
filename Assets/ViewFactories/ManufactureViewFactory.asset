@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 489584d535e644dd8fefba079cad8ec7, type: 3}
   m_Name: ManufactureViewFactory
   m_EditorClassIdentifier: 
-  manufactureView: {fileID: 0}
+  manufactureView: {fileID: 7028623086613525554, guid: 6f91de9690db8384795a3d0dca870ba0, type: 3}

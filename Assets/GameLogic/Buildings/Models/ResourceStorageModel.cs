@@ -1,26 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using CommonBaseUI.Data;
+using GameLogic.Transport;
 
 namespace GameLogic.Manufacture
 {
     public class ResourceStorageModel : IResourceStorageModel
     {
         private int resourceAmount;
+        private int resourceCapacity = 20;
 
         private readonly IBuildingUpgraderModel buildingUpgraderModel;
         private readonly ResourceStorageData resourceStorageData;
+        private readonly TransportationService transportationService;
         public event Action OnProducingResource;
-        public int ResourceAmount => resourceAmount < 1 ? 0 : resourceAmount;
+        public IBuildingModel BuildingModel { get; }
 
-        public ResourceStorageModel(IBuildingUpgraderModel buildingUpgraderModel)
+        public int ResourceAmount
         {
+            get => resourceAmount < 1 ? 0 : resourceAmount;
+            set
+            {
+                if(resourceAmount >= resourceCapacity) return;
+                resourceAmount = value;
+            }
+        }
+
+        public ResourceStorageModel(IBuildingModel buildingModel, IBuildingUpgraderModel buildingUpgraderModel,
+            TransportationService transportationService)
+        {
+            BuildingModel = buildingModel;
             this.buildingUpgraderModel = buildingUpgraderModel;
+            this.transportationService = transportationService;
 
             resourceStorageData = new ResourceStorageData();
             DataManager.Instance.buildingsData.ResourceStorageData.Add(resourceStorageData);
             DataManager.Instance.GetDataOnSave += SaveData;
             DataManager.Instance.SendDataOnLoad += LoadData;
+        }
+
+        public void OnClick()
+        {
+            transportationService.CallTransportService(this);
         }
 
         public bool AddDemandResources(ResourceType resource)
@@ -34,19 +55,24 @@ namespace GameLogic.Manufacture
 
         public bool ProduceResource()
         {
-            resourceAmount++;
+            ResourceAmount++;
             OnProducingResource?.Invoke();
             return true;
         }
 
+        public bool CheckResource(ResourceType resource)
+        {
+            return buildingUpgraderModel.CheckResource(resource);
+        }
+
         private void SaveData()
         {
-            resourceStorageData.resourceAmount = resourceAmount;
+            resourceStorageData.resourceAmount = ResourceAmount;
         }
 
         private void LoadData()
         {
-            resourceAmount = resourceStorageData.resourceAmount;
+            ResourceAmount = resourceStorageData.resourceAmount;
         }
     }
 }

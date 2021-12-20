@@ -11,6 +11,8 @@ namespace GameLogic.Manufacture
         public bool AddResource(ResourceType resourceType);
 
         public bool SpendResourceForCreateResource();
+
+        public bool CheckResource(ResourceType resource);
     }
     public class RefineryProduceStorageModel : IRefineryProduceStorageModel
     {
@@ -58,6 +60,11 @@ namespace GameLogic.Manufacture
                 productionResources[varResource]--;
             }
             return true;
+        }
+
+        public bool CheckResource(ResourceType resource)
+        {
+            return demandProductionResources.Contains(resource);
         }
 
         private void SaveData()

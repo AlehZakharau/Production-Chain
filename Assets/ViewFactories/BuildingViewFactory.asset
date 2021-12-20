@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f569622af3934ca6a15d975b512f353b, type: 3}
   m_Name: BuildingViewFactory
   m_EditorClassIdentifier: 
-  buildingView: {fileID: 2021794576175506281, guid: ede0e4be7438902498aaaa5ab601d487, type: 3}
+  buildingView: {fileID: 4261965161353071444, guid: 1bd55e41716549a46a5710c3dd17e459, type: 3}
+  refineryParent: {fileID: 4521406627497005601, guid: 0aa4e8575253e9142b3f05bad3f14221, type: 3}

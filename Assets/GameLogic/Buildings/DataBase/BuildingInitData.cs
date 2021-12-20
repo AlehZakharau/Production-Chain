@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameLogic.Manufacture
 {
     public class BuildingInitData : MonoBehaviour
     {
-        public BuildingsType buildingsType;
         [SerializeField] private InitializeData.InitData initData;
-
         [SerializeField] private InitializeData.ManufactureInitData manufactureInitData;
         [SerializeField] private InitializeData.RefineryInitData refineryInitData;
         [SerializeField] private InitializeData.LevelInitData[] levelsInitData =
@@ -65,36 +61,5 @@ namespace GameLogic.Manufacture
             }
         }
 #endif
-    }
-    
-    [Serializable]
-    public class InitializeData
-    {
-        [Serializable]
-        public struct InitData
-        {
-            public BuildingsType buildingsType;
-            public Transform Position;
-            public int startLevel;
-        }
-        [Serializable]
-        public struct LevelInitData
-        {
-            public  List<ResourceType> demandUpgradeResource;
-            public  int[] demandUpgradeResourceCapacity;
-            public  float upgradeProductionSpeedCoefficient;
-        }
-        [Serializable]
-        public struct RefineryInitData
-        {
-            public List<ResourceType> demandProducingResources;
-        }
-        [Serializable]
-        public struct ManufactureInitData
-        {
-            public ResourceType resourceType;
-            public  float productionSpeed;
-            public  Color color;
-        }
     }
 }

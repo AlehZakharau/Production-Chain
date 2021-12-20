@@ -9,6 +9,7 @@ namespace GameLogic.Manufacture
         public BuildingsType BuildingsType { get; set; }
         
         public Vector3 Position { get; set; }
+        
     }
     public class BuildingView : MonoBehaviour, IBuildingView
     {

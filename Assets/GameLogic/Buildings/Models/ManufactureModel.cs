@@ -7,6 +7,11 @@ namespace GameLogic.Manufacture
     public interface IManufactureModel
     {
         public ResourceType ResourceType { get; set; }
+        public bool IsSender { get; set; }
+        public IBuildingModel BuildingModel { get; }
+        public int GetResourceAmount();
+        public void TransportingResource();
+        public void OnClick();
     }
     internal class ManufactureModel : IManufactureModel, ITickable
     {
@@ -14,18 +19,24 @@ namespace GameLogic.Manufacture
 
         private readonly IResourceStorageModel resourceStorageModel;
         private readonly IBuildingUpgraderModel buildingUpgraderModel;
+        private readonly TransportationService transportationService;
 
         public ResourceType ResourceType { get; set; }
+        public bool IsSender { get; set; }
+        public IBuildingModel BuildingModel { get; }
 
         private readonly float producingSpeed;
 
-        public ManufactureModel(IResourceStorageModel resourceStorageModel,
+        public ManufactureModel(IBuildingModel buildingModel, IResourceStorageModel resourceStorageModel,
             IBuildingUpgraderModel buildingUpgraderModel, 
-            InitializeData.ManufactureInitData manufactureInitData)
+            InitializeData.ManufactureInitData manufactureInitData,
+            TransportationService transportationService)
         {
+            BuildingModel = buildingModel;
             this.resourceStorageModel = resourceStorageModel;
             this.buildingUpgraderModel = buildingUpgraderModel;
-            
+            this.transportationService = transportationService;
+
             producingSpeed = manufactureInitData.productionSpeed;
             ResourceType = manufactureInitData.resourceType;
         }
@@ -33,10 +44,28 @@ namespace GameLogic.Manufacture
         public void Tick()
         {
             timer += Time.deltaTime;
-            if (timer > producingSpeed)
+            if (timer > producingSpeed && buildingUpgraderModel.Level > 0)
             {
                 timer = 0;
                 resourceStorageModel.ProduceResource();
+            }
+        }
+
+        public int GetResourceAmount()
+        {
+            return resourceStorageModel.ResourceAmount;
+        }
+
+        public void TransportingResource()
+        {
+            resourceStorageModel.ResourceAmount--;
+        }
+
+        public void OnClick()
+        {
+            if (!IsSender)
+            {
+                transportationService.CallTransportService(this, resourceStorageModel);
             }
         }
 

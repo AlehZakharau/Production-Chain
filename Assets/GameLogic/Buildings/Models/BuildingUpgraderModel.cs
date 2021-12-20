@@ -8,11 +8,10 @@ namespace GameLogic.Manufacture
     public interface IBuildingUpgraderModel
     {
         public event Action OnUpgrade;
-        
         public int Level { get; set; }
         public Dictionary<ResourceType, int> UpgradeResources { get; }
-
         public bool AddResource(ResourceType resource);
+        public bool CheckResource(ResourceType resource);
     }
     public class BuildingUpgraderModel : IBuildingUpgraderModel
     {
@@ -28,8 +27,7 @@ namespace GameLogic.Manufacture
             }
         }
 
-        public Dictionary<ResourceType, int> 
-            UpgradeResources => upgradeResources;
+        public Dictionary<ResourceType, int> UpgradeResources => upgradeResources;
 
         private int level;
         private float upgradeProductionSpeedCoefficient;
@@ -44,7 +42,9 @@ namespace GameLogic.Manufacture
         {
             level = initData.startLevel;
             this.levelsData = levelsData;
-            upgradeProductionSpeedCoefficient = levelsData[level].upgradeProductionSpeedCoefficient;
+            //upgradeProductionSpeedCoefficient = levelsData[level].upgradeProductionSpeedCoefficient;
+            
+            UpgradeDataToNewLevel(level);
 
             upgradeData = new UpgradeData();
             DataManager.Instance.buildingsData.UpgradeData.Add(upgradeData);
@@ -54,9 +54,18 @@ namespace GameLogic.Manufacture
 
         public bool AddResource(ResourceType resource)
         {
-            upgradeResources[resource]--;
-            CheckUpgradeOpportunity();
+            if (upgradeResources[resource] > 0)
+            {
+                upgradeResources[resource]--;
+                CheckUpgradeOpportunity();
+                return true;
+            }
             return false;
+        }
+
+        public bool CheckResource(ResourceType resource)
+        {
+            return upgradeResources.ContainsKey(resource);
         }
 
         private void CheckUpgradeOpportunity()
@@ -71,7 +80,7 @@ namespace GameLogic.Manufacture
 
         private void UpgradeDataToNewLevel(int level)
         {
-            if(level >= levelsData.Length - 1) return;
+            if(level >= levelsData.Length) return;
             currentLevelInit = levelsData[level];
             //ProductionSpeed = currentLevel.productionSpeed;
             demandUpgradeResources = currentLevelInit.demandUpgradeResource;
