@@ -39,10 +39,13 @@ namespace GameLogic.Manufacture
             DataManager.Instance.SendDataOnLoad += LoadData;
         }
 
+        /// <summary>
+        /// Doesn't call this method in Manufactures, becoase it calls in ManufactureModel.
+        /// Need to fix in the future.
+        /// </summary>
         public void OnClick()
         {
-            if(BuildingModel.BuildingsType == BuildingsType.Extractor ||
-                BuildingModel.BuildingsType == BuildingsType.Refinery) return;
+            if(BuildingModel.BuildingsType == BuildingsType.Extractor) return;
             transportationService.CallTransportService(this);
         }
 

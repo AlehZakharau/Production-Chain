@@ -43,7 +43,6 @@ namespace GameLogic.Manufacture
         
         public void OnClick()
         {
-            transportationService.CallTransportService(this);
         }
 
         public bool AddDemandResources(ResourceType resource)

@@ -1,29 +1,30 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace GameLogic.Manufacture
 {
-    public class TowerModel : IBuildingModel
+    public interface ITowerModel
     {
-        public BuildingsType BuildingsType { get; set; }
-        public Vector3 Position { get; set; }
+        public event Action OnUpgradeTower;
+    }
+    public class TowerModel : ITowerModel
+    {
+        public event Action OnUpgradeTower;
         
         private readonly IBuildingUpgraderModel buildingUpgraderModel;
-        
-        public TowerModel(IBuildingUpgraderModel buildingUpgraderModel,
-            InitializeData.InitData initData)
+
+
+        public TowerModel(IBuildingUpgraderModel buildingUpgraderModel)
         {
             this.buildingUpgraderModel = buildingUpgraderModel;
 
-            BuildingsType = initData.buildingsType;
-            Position = initData.Position.position;
             
             buildingUpgraderModel.OnUpgrade += OnUpgrade;
         }
 
         private void OnUpgrade()
         {
-            // Open new Area
-            throw new System.NotImplementedException();
+            OnUpgradeTower?.Invoke();
         }
     }
 }

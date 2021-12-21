@@ -8,9 +8,6 @@ namespace GameLogic.Manufacture
         [SerializeField] private BuildingViewFactory buildingViewFactory;
         [SerializeField] private RefineryViewFactory refineryViewFactory;
         [SerializeField] private ExtractorViewFactory extractorViewFactory;
-        [SerializeField] private ManufactureViewFactory manufactureViewFactory;
-        [SerializeField] private RefineryProduceStorageViewFactory refineryProduceStorageViewFactory;
-        [SerializeField] private ResourceStorageViewFactory resourceStorageViewFactory;
         
         private TransportationService transportationService;
         public void CreateBuilding(BuildingInitData initData, TransportationService transportationService)
@@ -77,8 +74,7 @@ namespace GameLogic.Manufacture
                     break;
                 case BuildingsType.Tower:
                     //Models
-                    var towerBuildingModel = new TowerModel(buildingUpgraderModel,
-                        initData.InitData);
+                    var towerBuildingModel = new TowerModel(buildingUpgraderModel);
                     
                     //Views
                     buildingViewFactory.Initiate(parent);
