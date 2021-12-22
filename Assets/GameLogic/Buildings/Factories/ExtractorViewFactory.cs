@@ -7,7 +7,7 @@ namespace GameLogic.Manufacture
         IBuildingView BuildingView { get; }
         IBuildingUpgraderView BuildingUpgraderView { get; }
         IBuildingClicable BuildingClicable { get; }
-        IResourceStorageView ResourceStorageView { get; }
+        IProduceView ProduceView { get; }
         IManufactureView ManufactureView { get; }
     }
     [CreateAssetMenu(fileName = "ExtractorViewFactory", menuName = "Factories/ExtractorViewFactory", order = 0)]
@@ -18,7 +18,7 @@ namespace GameLogic.Manufacture
         public IBuildingUpgraderView BuildingUpgraderView { get; private set; }
         public IBuildingClicable BuildingClicable { get; private set; }
         public IManufactureView ManufactureView { get; private set; }
-        public IResourceStorageView ResourceStorageView{ get; private set; }
+        public IProduceView ProduceView{ get; private set; }
 
         public void Initiate(Transform parent)
         {
@@ -27,7 +27,7 @@ namespace GameLogic.Manufacture
             BuildingUpgraderView = instance.GetComponent<IBuildingUpgraderView>();
             BuildingClicable = instance.GetComponent<IBuildingClicable>();
             ManufactureView = instance.GetComponent<IManufactureView>();
-            ResourceStorageView = instance.GetComponent<IResourceStorageView>();
+            ProduceView = instance.GetComponent<IProduceView>();
         }
     }
 }

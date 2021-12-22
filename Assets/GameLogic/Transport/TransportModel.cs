@@ -15,7 +15,7 @@ namespace GameLogic.Transport
         
         public Vector3 ReceiverPosition { get; set; }
 
-        public void AddModels(IManufactureModel sender, IResourceStorageModel receiver);
+        public void AddModels(IManufactureModel sender, IResourceStorage receiver);
         public void Destroy();
     }
     public class TransportModel : ITransportModel, ITickable
@@ -27,7 +27,7 @@ namespace GameLogic.Transport
 
         private readonly TransportationService transportationService;
         private IManufactureModel senderModel;
-        private IResourceStorageModel receiverModel;
+        private IResourceStorage receiver;
         private Vector3 senderPosition;
         private Vector3 receiverPosition;
         private float distance;
@@ -53,7 +53,7 @@ namespace GameLogic.Transport
             }
         }
 
-        public void AddModels(IManufactureModel sender, IResourceStorageModel receiver)
+        public void AddModels(IManufactureModel sender, IResourceStorage receiver)
         {
             AddSenderModel(sender);
             AddReceiverModel(receiver);
@@ -67,11 +67,11 @@ namespace GameLogic.Transport
         
         }
         
-        private void AddReceiverModel(IResourceStorageModel receiverModel)
+        private void AddReceiverModel(IResourceStorage receiver)
         {
-            this.receiverModel = receiverModel;
+            this.receiver = receiver;
         
-            ReceiverPosition = receiverModel.BuildingModel.Position;
+            ReceiverPosition = receiver.BuildingModel.Position;
             
             distance = Vector3.Distance(SenderPosition, ReceiverPosition);
         
@@ -93,7 +93,7 @@ namespace GameLogic.Transport
             {
                 timer = 0f;
                 if(senderModel.GetResourceAmount() < 1) return;
-                var status = receiverModel.AddDemandResources(senderModel.ResourceType);
+                var status = receiver.AddDemandResources(senderModel.ResourceType);
                 if (status)
                 {
                     senderModel.TransportingResource();

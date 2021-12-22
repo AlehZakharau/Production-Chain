@@ -4,20 +4,20 @@ namespace GameLogic.Manufacture
 {
     public interface IResourceStorageViewFactory
     {
-        IResourceStorageView ResourceStorageView { get; }
+        IProduceView ProduceView { get; }
     }
     [CreateAssetMenu(fileName = "ResourceStorageViewFactory", 
         menuName = "Factories/ResourceStorageViewFactory", order = 0)]
     public class ResourceStorageViewFactory : ScriptableObject, IResourceStorageViewFactory
     {
-        [SerializeField] private ResourceStorageView resourceStorageView;
+        [SerializeField] private ProduceView produceView;
         
-        public IResourceStorageView ResourceStorageView { get; private set; }
+        public IProduceView ProduceView { get; private set; }
 
         public void Initiate(Transform parent)
         {
-            var instance = Instantiate(resourceStorageView, parent);
-            ResourceStorageView = instance.GetComponent<IResourceStorageView>();
+            var instance = Instantiate(produceView, parent);
+            ProduceView = instance.GetComponent<IProduceView>();
         }
     }
 }

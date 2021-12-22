@@ -19,7 +19,6 @@ namespace GameLogic.Manufacture
         {
             public List<ResourceType> demandUpgradeResource;
             public int[] demandUpgradeResourceCapacity;
-            public float upgradeProductionSpeedCoefficient;
         }
         [Serializable]
         public struct RefineryInitData
@@ -31,7 +30,9 @@ namespace GameLogic.Manufacture
         {
             public ResourceType resourceType;
             public float productionSpeed;
-            public Color color;
+            // has to be equals levelInitData.Length or higher;
+            public float[] productionSpeedUpgrade;
+            public int[] resourceCapacity;
         }
     }
 }

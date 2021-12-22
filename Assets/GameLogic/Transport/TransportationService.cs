@@ -9,7 +9,7 @@ namespace GameLogic.Transport
         private readonly TransportViewFactory transportViewFactory;
 
         private IManufactureModel sender;
-        private IResourceStorageModel receiver;
+        private IResourceStorage receiver;
         
         private readonly Dictionary<ITransportModel, ITickable> transports = new Dictionary<ITransportModel, ITickable>();
 
@@ -21,12 +21,12 @@ namespace GameLogic.Transport
             this.transportViewFactory = transportViewFactory;
         }
 
-        public bool CallTransportService(IManufactureModel sender, IResourceStorageModel receiver)
+        public bool CallTransportService(IManufactureModel sender, IResourceStorage receiver)
         {
             return this.sender == null ? AddManufactureModel(sender) : AddResourceStorage(receiver);
         }
 
-        public bool CallTransportService(IResourceStorageModel receiver)
+        public bool CallTransportService(IResourceStorage receiver)
         {
             return sender != null && AddResourceStorage(receiver);
         }
@@ -42,11 +42,11 @@ namespace GameLogic.Transport
             return false;
         }
 
-        private bool AddResourceStorage(IResourceStorageModel resourceStorageModel)
+        private bool AddResourceStorage(IResourceStorage resourceStorage)
         {
             if (receiver == null)
             {
-                receiver = resourceStorageModel;
+                receiver = resourceStorage;
                 if (receiver.CheckResource(sender.ResourceType))
                 {
                     sender.IsSender = true;
@@ -65,7 +65,7 @@ namespace GameLogic.Transport
             currentTransport = null;
         }
 
-        private void CreateTransport(IManufactureModel sender, IResourceStorageModel receiver)
+        private void CreateTransport(IManufactureModel sender, IResourceStorage receiver)
         {
             var transportModelFactory = new TransportModelFactory( this);
             Tick.Tickable.Add(transportModelFactory.Tick);

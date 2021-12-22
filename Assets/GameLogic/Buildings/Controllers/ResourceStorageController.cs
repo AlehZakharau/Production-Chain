@@ -1,36 +1,27 @@
 ﻿namespace GameLogic.Manufacture
 {
-    public interface IResourceStorageController
+    public interface IProduceController
     {
         
     }
-    public class ResourceStorageController : IResourceStorageController
+    public class ProduceController : IProduceController
     {
-        private readonly IResourceStorageModel resourceStorageModel;
-        private readonly IResourceStorageView resourceStorageView;
-        private readonly IBuildingClicable buildingClicable;
+        private readonly IProduceModel produceModel;
+        private readonly IProduceView produceView;
 
-        public ResourceStorageController(IResourceStorageModel resourceStorageModel,
-            IResourceStorageView resourceStorageView, IBuildingClicable buildingClicable)
+        public ProduceController(IProduceModel produceModel,
+            IProduceView produceView)
         {
-            this.resourceStorageModel = resourceStorageModel;
-            this.resourceStorageView = resourceStorageView;
-            this.buildingClicable = buildingClicable;
+            this.produceModel = produceModel;
+            this.produceView = produceView;
             
+            produceModel.OnProducingResource += OnProducingResource;
             
-            resourceStorageModel.OnProducingResource += OnProducingResource;
-            
-            buildingClicable.OnClick += OnClick;
-        }
-
-        private void OnClick()
-        {
-            resourceStorageModel.OnClick();
         }
 
         private void OnProducingResource()
         {
-            resourceStorageView.ResourceAmount = resourceStorageModel.ResourceAmount;
+            produceView.ResourceAmount = produceModel.ResourceAmount;
         }
     }
 }

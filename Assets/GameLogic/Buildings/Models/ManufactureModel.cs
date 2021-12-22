@@ -15,30 +15,38 @@ namespace GameLogic.Manufacture
     }
     internal class ManufactureModel : IManufactureModel, ITickable
     {
-        private float timer;
-
-        private readonly IResourceStorageModel resourceStorageModel;
-        private readonly IBuildingUpgraderModel buildingUpgraderModel;
-        private readonly TransportationService transportationService;
-
         public ResourceType ResourceType { get; set; }
         public bool IsSender { get; set; }
         public IBuildingModel BuildingModel { get; }
 
-        private readonly float producingSpeed;
+        private readonly IResourceStorage resourceStorage;
+        private readonly IProduceModel produceModel;
+        private readonly IBuildingUpgraderModel buildingUpgraderModel;
+        private readonly TransportationService transportationService;
+        private readonly InitializeData.ManufactureInitData manufactureInitData;
+        
+        private float producingSpeed;
+        private float timer;
 
-        public ManufactureModel(IBuildingModel buildingModel, IResourceStorageModel resourceStorageModel,
+        public ManufactureModel(IBuildingModel buildingModel,
+            IResourceStorage resourceStorage,
+            IProduceModel produceModel,
             IBuildingUpgraderModel buildingUpgraderModel, 
             InitializeData.ManufactureInitData manufactureInitData,
             TransportationService transportationService)
         {
             BuildingModel = buildingModel;
-            this.resourceStorageModel = resourceStorageModel;
+            this.produceModel = produceModel;
+            this.resourceStorage = resourceStorage;
             this.buildingUpgraderModel = buildingUpgraderModel;
             this.transportationService = transportationService;
+            this.manufactureInitData = manufactureInitData;
 
-            producingSpeed = manufactureInitData.productionSpeed;
+            producingSpeed = manufactureInitData.productionSpeed /
+                             manufactureInitData.productionSpeedUpgrade[this.buildingUpgraderModel.Level];
             ResourceType = manufactureInitData.resourceType;
+
+            this.buildingUpgraderModel.OnUpgrade += OnUpgrade;
         }
 
         public void Tick()
@@ -47,50 +55,32 @@ namespace GameLogic.Manufacture
             if (timer > producingSpeed && buildingUpgraderModel.Level > 0)
             {
                 timer = 0;
-                resourceStorageModel.ProduceResource();
+                produceModel.ProduceResource();
             }
         }
 
         public int GetResourceAmount()
         {
-            return resourceStorageModel.ResourceAmount;
+            return produceModel.ResourceAmount;
         }
 
         public void TransportingResource()
         {
-            resourceStorageModel.ResourceAmount--;
+            produceModel.ResourceAmount--;
         }
 
         public void OnClick()
         {
             if (!IsSender)
             {
-                transportationService.CallTransportService(this, resourceStorageModel);
+                transportationService.CallTransportService(this, resourceStorage);
             }
         }
 
-        // public void AddManufactureModel()
-
-        // {
-
-        //     var status = transportationService.AddManufactureModel(this);
-
-        //     if (status)
-
-        //     {
-
-        //         OnConnectionSuccess?.Invoke();
-
-        //     }
-
-        //     else
-
-        //     {
-
-        //         OnConnectionFail?.Invoke();
-
-        //     }
-
-        // }
+        private void OnUpgrade()
+        {
+            producingSpeed = manufactureInitData.productionSpeed /
+                             manufactureInitData.productionSpeedUpgrade[buildingUpgraderModel.Level];
+        }
     }
 }

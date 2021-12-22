@@ -6,7 +6,7 @@ namespace GameLogic.Manufacture
     {
         public IBuildingView BuildingView { get; }
         public IBuildingClicable BuildingClicable { get; }
-        public IResourceStorageView ResourceStorageView { get; }
+        public IProduceView ProduceView { get; }
         public ITowerView TowerView { get; }
         public IBuildingUpgraderView BuildingUpgraderView { get; }
     }
@@ -16,7 +16,7 @@ namespace GameLogic.Manufacture
         [SerializeField] private BuildingView buildingView;
         public IBuildingView BuildingView { get; private set; }
         public IBuildingClicable BuildingClicable { get; private set; }
-        public IResourceStorageView ResourceStorageView { get; private set; }
+        public IProduceView ProduceView { get; private set; }
         public ITowerView TowerView { get; private set; }
         public IBuildingUpgraderView BuildingUpgraderView { get; private set; }
         
@@ -27,7 +27,7 @@ namespace GameLogic.Manufacture
             BuildingUpgraderView = instance.GetComponent<IBuildingUpgraderView>();
             BuildingClicable = instance.GetComponent<IBuildingClicable>();
             TowerView = instance.GetComponent<ITowerView>();
-            ResourceStorageView = instance.GetComponent<IResourceStorageView>();
+            ProduceView = instance.GetComponent<IProduceView>();
         }
     }
 }

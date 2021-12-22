@@ -20,10 +20,11 @@ namespace GameLogic.Manufacture
             {
                 case BuildingsType.Extractor:
                     //Models
-                    var extractorResourceStorageModel = new ResourceStorageModel( 
+                    var extractorProduceModel = new ProduceModel();
+                    var extractorResourceStorage = new ResourceStorage( 
                         buildingModel, buildingUpgraderModel, transportationService);
                     var extractorModel = new ManufactureModel(buildingModel, 
-                        extractorResourceStorageModel, buildingUpgraderModel, 
+                        extractorResourceStorage, extractorProduceModel, buildingUpgraderModel, 
                         initData.ManufactureInitData, transportationService);
                     Tick.Tickable.Add(extractorModel);
                     
@@ -32,25 +33,26 @@ namespace GameLogic.Manufacture
                     var extractorBuildingClicable = extractorViewFactory.BuildingClicable;
                     var extractorBuildingView = extractorViewFactory.BuildingView;
                     var extractorBuildingUpgradeView = extractorViewFactory.BuildingUpgraderView;
-                    var extractorResourceStorageView = extractorViewFactory.ResourceStorageView;
+                    var extractorProduceView = extractorViewFactory.ProduceView;
                     var extractorView = extractorViewFactory.ManufactureView;
 
                     //Controllers
                     var extractorBuildingController = new BuildingController(buildingUpgraderModel,
                         extractorBuildingUpgradeView,
                         buildingModel, extractorBuildingView);
-                    var extractorResourceStorage = new ResourceStorageController(extractorResourceStorageModel,
-                        extractorResourceStorageView, extractorBuildingClicable);
+                    var extractorProduceController = new ProduceController(extractorProduceModel,
+                        extractorProduceView);
                     var extractorController = new ManufactureController(
-                        extractorModel, extractorView, extractorBuildingClicable);
+                        extractorModel, extractorView, extractorBuildingClicable, extractorResourceStorage);
                     break;
                 case BuildingsType.Refinery:
                     //Models
+                    var refineryProduceModel = new ProduceModel();
                     var refineryProduceStorageModel = new RefineryProduceStorageModel(initData.RefineryInitData);
-                    var refineryResourceStorageModel = new RefineryResourceStorageModel(buildingModel, 
-                        buildingUpgraderModel, refineryProduceStorageModel, transportationService);
+                    var refineryResourceStorage = new RefineryResourceStorage(buildingModel, 
+                        buildingUpgraderModel, refineryProduceStorageModel);
                     var refineryModel = new ManufactureModel(buildingModel,
-                        refineryResourceStorageModel, buildingUpgraderModel, 
+                        refineryResourceStorage, refineryProduceModel, buildingUpgraderModel, 
                         initData.ManufactureInitData, transportationService);
                     Tick.Tickable.Add(refineryModel);
                     
@@ -60,9 +62,12 @@ namespace GameLogic.Manufacture
                     var refineryBuildingView = refineryViewFactory.BuildingView;
                     var refineryBuildingUpgradeView = refineryViewFactory.BuildingUpgraderView;
                     var refineryProduceStorageView = refineryViewFactory.RefineryProduceStorageView;
+                    var refineryProduceView = refineryViewFactory.ProduceView;
                     var refineryView = refineryViewFactory.ManufactureView;
                     
                     //Controllers
+                    var refineryProduceController = new ProduceController(refineryProduceModel,
+                        refineryProduceView);
                     var refineryBuildingController = new BuildingController(buildingUpgraderModel,
                         refineryBuildingUpgradeView,
                         buildingModel, refineryBuildingView);
@@ -70,7 +75,7 @@ namespace GameLogic.Manufacture
                         refineryProduceStorageModel,
                         refineryProduceStorageView, refineryBuildingClicable);
                     var refineryController = new ManufactureController(
-                        refineryModel, refineryView, buildingViewFactory.BuildingClicable);
+                        refineryModel, refineryView, buildingViewFactory.BuildingClicable, refineryResourceStorage);
                     break;
                 case BuildingsType.Tower:
                     //Models
