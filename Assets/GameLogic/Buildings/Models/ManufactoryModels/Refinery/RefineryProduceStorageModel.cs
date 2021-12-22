@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CommonBaseUI.Data;
+using GameLogic.Buildings.DataBase;
 
 namespace GameLogic.Manufacture
 {

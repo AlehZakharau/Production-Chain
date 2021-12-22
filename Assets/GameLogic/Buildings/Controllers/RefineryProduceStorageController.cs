@@ -1,4 +1,5 @@
 ﻿using GameLogic.Buildings.Views;
+using GameLogic.Manufacture;
 
 namespace GameLogic.Buildings.Controllers
 {

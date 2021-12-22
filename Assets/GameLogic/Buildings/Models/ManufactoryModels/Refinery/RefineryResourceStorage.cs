@@ -1,5 +1,7 @@
 ﻿using System;
 using CommonBaseUI.Data;
+using GameLogic.Buildings.Interfaces;
+using GameLogic.Buildings.Models;
 using GameLogic.Transport;
 
 namespace GameLogic.Manufacture

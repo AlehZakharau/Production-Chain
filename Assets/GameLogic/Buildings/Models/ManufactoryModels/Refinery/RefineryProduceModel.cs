@@ -1,5 +1,6 @@
 ﻿using System;
 using CommonBaseUI.Data;
+using GameLogic.Buildings.Models.ManufactoryModels;
 
 namespace GameLogic.Manufacture
 {

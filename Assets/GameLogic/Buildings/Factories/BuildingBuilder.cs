@@ -2,6 +2,7 @@
 using GameLogic.Buildings.DataBase;
 using GameLogic.Buildings.Models;
 using GameLogic.Buildings.Models.ManufactoryModels;
+using GameLogic.Manufacture;
 using GameLogic.Transport;
 using UnityEngine;
 
