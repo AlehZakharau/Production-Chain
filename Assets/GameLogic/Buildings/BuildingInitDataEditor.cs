@@ -1,7 +1,7 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using GameLogic.Buildings.DataBase;
+using UnityEditor;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings
 {
     [CustomEditor(typeof(BuildingInitData))]
     [CanEditMultipleObjects]

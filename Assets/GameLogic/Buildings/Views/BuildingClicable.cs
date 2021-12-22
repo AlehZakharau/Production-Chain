@@ -2,7 +2,7 @@
 using GameLogic.CameraController;
 using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Views
 {
     public interface IBuildingClicable
     {

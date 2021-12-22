@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using GameLogic.Buildings.DataBase;
+using GameLogic.Buildings.Interfaces;
+using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Models
 {
     public class BuildingModel : IBuildingModel
     {

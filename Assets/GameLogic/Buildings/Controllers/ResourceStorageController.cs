@@ -1,4 +1,7 @@
-﻿namespace GameLogic.Manufacture
+﻿using GameLogic.Buildings.Models.ManufactoryModels;
+using GameLogic.Buildings.Views;
+
+namespace GameLogic.Buildings.Controllers
 {
     public interface IProduceController
     {

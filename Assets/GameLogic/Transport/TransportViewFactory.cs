@@ -1,5 +1,4 @@
-﻿using GameLogic.Manufacture;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GameLogic.Transport
 {

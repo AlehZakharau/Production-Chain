@@ -1,8 +1,6 @@
-﻿using GameLogic.CameraController;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Views
 {
     public interface IBuildingView
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Interfaces
 {
     public interface IBuildingModel
     {

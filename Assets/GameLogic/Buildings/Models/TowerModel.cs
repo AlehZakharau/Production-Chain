@@ -1,7 +1,6 @@
 ﻿using System;
-using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Models
 {
     public interface ITowerModel
     {

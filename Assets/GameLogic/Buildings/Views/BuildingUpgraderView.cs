@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Views
 {
     public interface IBuildingUpgraderView
     {

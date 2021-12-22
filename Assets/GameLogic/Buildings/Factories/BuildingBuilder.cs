@@ -1,7 +1,11 @@
-﻿using GameLogic.Transport;
+﻿using GameLogic.Buildings.Controllers;
+using GameLogic.Buildings.DataBase;
+using GameLogic.Buildings.Models;
+using GameLogic.Buildings.Models.ManufactoryModels;
+using GameLogic.Transport;
 using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Factories
 {
     public class BuildingBuilder : MonoBehaviour
     {

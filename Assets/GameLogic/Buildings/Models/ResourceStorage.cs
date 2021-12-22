@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using CommonBaseUI.Data;
+﻿using GameLogic.Buildings.Interfaces;
 using GameLogic.Transport;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Models
 {
     public class ResourceStorage : IResourceStorage
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using CommonBaseUI.Data;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Models.ManufactoryModels
 {
     public interface IProduceModel
     {

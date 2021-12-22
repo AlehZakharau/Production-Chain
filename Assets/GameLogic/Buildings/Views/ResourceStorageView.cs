@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Views
 {
     public interface IProduceView
     {

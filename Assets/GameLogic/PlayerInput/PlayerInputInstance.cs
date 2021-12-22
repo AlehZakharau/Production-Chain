@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameLogic.CameraController
+namespace GameLogic.PlayerInput
 {
     public class PlayerInputInstance : MonoBehaviour
     {

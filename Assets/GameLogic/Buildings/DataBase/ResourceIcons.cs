@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.DataBase
 {
     [CreateAssetMenu(fileName = "ResourceIcons", menuName = "DB/ResourceIcons", order = 0)]
     public class ResourceIcons : ScriptableObject

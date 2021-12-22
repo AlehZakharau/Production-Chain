@@ -1,28 +1,31 @@
 ﻿using System;
 using UnityEngine;
 
-public interface ITowerView
+namespace GameLogic.Buildings.Views
 {
-    public void OpenNewArea();
-}
-
-public class TowerView : MonoBehaviour, ITowerView
-{
-    [SerializeField] private SpriteRenderer[] tiles;
-
-    private void Start()
+    public interface ITowerView
     {
-        foreach (var tile in tiles)
-        {
-            tile.enabled = false;
-        }
+        public void OpenNewArea();
     }
 
-    public void OpenNewArea()
+    public class TowerView : MonoBehaviour, ITowerView
     {
-        foreach (var tile in tiles)
+        [SerializeField] private SpriteRenderer[] tiles;
+
+        private void Start()
         {
-            tile.enabled = true;
+            foreach (var tile in tiles)
+            {
+                tile.enabled = false;
+            }
+        }
+
+        public void OpenNewArea()
+        {
+            foreach (var tile in tiles)
+            {
+                tile.enabled = true;
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
-using GameLogic.Manufacture;
+using GameLogic.Buildings.Interfaces;
+using GameLogic.Buildings.Models.ManufactoryModels;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 

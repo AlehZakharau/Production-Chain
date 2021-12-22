@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameLogic.Manufacture;
 using UnityEngine;
 
 namespace CommonBaseUI.Data

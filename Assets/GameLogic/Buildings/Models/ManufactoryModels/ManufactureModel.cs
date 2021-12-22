@@ -1,8 +1,9 @@
-﻿using System;
+﻿using GameLogic.Buildings.DataBase;
+using GameLogic.Buildings.Interfaces;
 using GameLogic.Transport;
 using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Models.ManufactoryModels
 {
     public interface IManufactureModel
     {

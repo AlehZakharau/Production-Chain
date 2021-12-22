@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using GameLogic.Buildings.DataBase;
+using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Views
 {
     public interface IManufactureView
     {

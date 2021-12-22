@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace GameLogic.CameraController
+namespace GameLogic.PlayerInput
 {
     public class @PlayerInput : IInputActionCollection, IDisposable
     {

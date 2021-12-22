@@ -1,8 +1,7 @@
-﻿using CommonBaseUI.Data;
-using GameLogic.Transport;
+﻿using GameLogic.Buildings.Views;
 using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Factories
 {
     public interface IBuildingViewFactory
     {

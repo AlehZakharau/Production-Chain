@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameLogic.PlayerInput;
+using UnityEngine;
 
 namespace GameLogic.CameraController
 {
@@ -6,7 +7,7 @@ namespace GameLogic.CameraController
     public sealed class MouseClicker : MonoBehaviour
     {
         private Camera camera;
-        private PlayerInput playerInput;
+        private PlayerInput.PlayerInput playerInput;
         private IClickable currentObject;
 
         private int clicableMask;

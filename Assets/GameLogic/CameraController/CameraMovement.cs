@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using GameLogic.PlayerInput;
+using UnityEngine;
 
 namespace GameLogic.CameraController
 {
     public class CameraMovement : MonoBehaviour
     {
-        private PlayerInput playerInput;
+        private PlayerInput.PlayerInput playerInput;
 
         [SerializeField] private float speedButtons = 2f;
         [SerializeField] private float speedMouse = 2f;

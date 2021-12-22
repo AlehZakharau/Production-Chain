@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using GameLogic.Manufacture;
+using GameLogic.Buildings.Interfaces;
+using GameLogic.Buildings.Models.ManufactoryModels;
 
 namespace GameLogic.Transport
 {

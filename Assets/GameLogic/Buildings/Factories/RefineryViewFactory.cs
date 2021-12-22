@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using GameLogic.Buildings.Views;
+using UnityEngine;
 
-namespace GameLogic.Manufacture
+namespace GameLogic.Buildings.Factories
 {
     public interface IRefineryViewFactory
     {

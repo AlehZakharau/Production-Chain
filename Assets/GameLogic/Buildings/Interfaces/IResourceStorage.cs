@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine.UIElements;
-
-namespace GameLogic.Manufacture
+﻿namespace GameLogic.Buildings.Interfaces
 {
     public interface IResourceStorage
     {
