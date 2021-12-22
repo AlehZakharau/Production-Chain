@@ -20,7 +20,7 @@ namespace GameLogic.Manufacture
             {
                 case BuildingsType.Extractor:
                     //Models
-                    var extractorProduceModel = new ProduceModel();
+                    var extractorProduceModel = new ExtractorProduceModel();
                     var extractorResourceStorage = new ResourceStorage( 
                         buildingModel, buildingUpgraderModel, transportationService);
                     var extractorModel = new ManufactureModel(buildingModel, 
@@ -47,8 +47,8 @@ namespace GameLogic.Manufacture
                     break;
                 case BuildingsType.Refinery:
                     //Models
-                    var refineryProduceModel = new ProduceModel();
                     var refineryProduceStorageModel = new RefineryProduceStorageModel(initData.RefineryInitData);
+                    var refineryProduceModel = new RefineryProduceModel(refineryProduceStorageModel);
                     var refineryResourceStorage = new RefineryResourceStorage(buildingModel, 
                         buildingUpgraderModel, refineryProduceStorageModel);
                     var refineryModel = new ManufactureModel(buildingModel,

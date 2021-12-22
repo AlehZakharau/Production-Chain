@@ -44,6 +44,7 @@ namespace GameLogic.Manufacture
 
             producingSpeed = manufactureInitData.productionSpeed /
                              manufactureInitData.productionSpeedUpgrade[this.buildingUpgraderModel.Level];
+            produceModel.ResourceCapacity = manufactureInitData.resourceCapacity[buildingUpgraderModel.Level];
             ResourceType = manufactureInitData.resourceType;
 
             this.buildingUpgraderModel.OnUpgrade += OnUpgrade;
@@ -81,6 +82,7 @@ namespace GameLogic.Manufacture
         {
             producingSpeed = manufactureInitData.productionSpeed /
                              manufactureInitData.productionSpeedUpgrade[buildingUpgraderModel.Level];
+            produceModel.ResourceCapacity = manufactureInitData.resourceCapacity[buildingUpgraderModel.Level];
         }
     }
 }
